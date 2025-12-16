@@ -74,7 +74,7 @@ fun ArticleDetailScreen(
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 
-                HorizontalDivider(modifier = Modifier.padding(vertical = 24.dp))
+                Divider(modifier = Modifier.padding(vertical = 24.dp))
                 
                 FormattedArticleContent(content = article.content)
                 
