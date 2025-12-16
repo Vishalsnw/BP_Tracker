@@ -232,7 +232,7 @@ private fun HeroCard(
                                     text = "/",
                                     style = MaterialTheme.typography.displaySmall,
                                     color = Color.White.copy(alpha = 0.7f),
-                                    modifier = Modifier.padding(horizontal = 4.dp, bottom = 4.dp)
+                                    modifier = Modifier.padding(horizontal = 4.dp)
                                 )
                                 Text(
                                     text = "${lastReading.diastolic}",

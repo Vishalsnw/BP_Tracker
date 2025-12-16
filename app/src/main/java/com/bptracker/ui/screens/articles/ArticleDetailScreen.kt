@@ -8,7 +8,11 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.bptracker.data.model.HealthArticlesData
 
@@ -70,13 +74,9 @@ fun ArticleDetailScreen(
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 
-                Divider(modifier = Modifier.padding(vertical = 24.dp))
+                HorizontalDivider(modifier = Modifier.padding(vertical = 24.dp))
                 
-                Text(
-                    text = article.content,
-                    style = MaterialTheme.typography.bodyLarge,
-                    lineHeight = MaterialTheme.typography.bodyLarge.lineHeight * 1.5
-                )
+                FormattedArticleContent(content = article.content)
                 
                 Spacer(modifier = Modifier.height(32.dp))
                 
@@ -111,6 +111,44 @@ fun ArticleDetailScreen(
                     .padding(padding)
             ) {
                 Text("Article not found")
+            }
+        }
+    }
+}
+
+@Composable
+private fun FormattedArticleContent(content: String) {
+    val formattedText = parseMarkdownContent(content)
+    Text(
+        text = formattedText,
+        style = MaterialTheme.typography.bodyLarge,
+        lineHeight = MaterialTheme.typography.bodyLarge.lineHeight * 1.5
+    )
+}
+
+private fun parseMarkdownContent(content: String): AnnotatedString {
+    return buildAnnotatedString {
+        var i = 0
+        val text = content
+        
+        while (i < text.length) {
+            when {
+                text.startsWith("**", i) -> {
+                    val endIndex = text.indexOf("**", i + 2)
+                    if (endIndex != -1) {
+                        withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
+                            append(text.substring(i + 2, endIndex))
+                        }
+                        i = endIndex + 2
+                    } else {
+                        append(text[i])
+                        i++
+                    }
+                }
+                else -> {
+                    append(text[i])
+                    i++
+                }
             }
         }
     }
