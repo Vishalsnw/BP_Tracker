@@ -25,7 +25,7 @@ data class BloodPressureReading(
     
     val category: BloodPressureCategory
         get() = when {
-            systolic >= 180 || diastolic >= 120 -> BloodPressureCategory.HYPERTENSIVE_CRISIS
+            systolic > 180 || diastolic > 120 -> BloodPressureCategory.HYPERTENSIVE_CRISIS
             systolic >= 140 || diastolic >= 90 -> BloodPressureCategory.HIGH_STAGE_2
             systolic in 130..139 || diastolic in 80..89 -> BloodPressureCategory.HIGH_STAGE_1
             systolic in 120..129 && diastolic < 80 -> BloodPressureCategory.ELEVATED
