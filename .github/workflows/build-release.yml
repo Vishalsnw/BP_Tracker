@@ -9,6 +9,11 @@ on:
     branches: [ main, master ]
   workflow_dispatch:
 
+env:
+  KEYSTORE_PASSWORD: your_keystore_password_here
+  KEY_ALIAS: your_key_alias_here
+  KEY_PASSWORD: your_key_password_here
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -27,23 +32,15 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Create keystore
+      - name: Create keystore from base64
         run: |
-          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > app/release-keystore.jks
+          echo "YOUR_BASE64_ENCODED_KEYSTORE_HERE" | base64 -d > app/release-keystore.jks
 
       - name: Build Release APK
         run: ./gradlew assembleRelease
-        env:
-          SIGNING_KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
-          SIGNING_KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-          SIGNING_STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
 
       - name: Build Release AAB
         run: ./gradlew bundleRelease
-        env:
-          SIGNING_KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
-          SIGNING_KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
-          SIGNING_STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
