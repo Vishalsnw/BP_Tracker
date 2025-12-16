@@ -55,20 +55,17 @@ fun StatisticsScreen(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
-            SingleChoiceSegmentedButtonRow(
-                modifier = Modifier.fillMaxWidth()
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                StatsPeriod.entries.forEachIndexed { index, period ->
-                    SegmentedButton(
+                StatsPeriod.entries.forEach { period ->
+                    FilterChip(
                         selected = selectedPeriod == period,
                         onClick = { selectedPeriod = period },
-                        shape = SegmentedButtonDefaults.itemShape(
-                            index = index,
-                            count = StatsPeriod.entries.size
-                        )
-                    ) {
-                        Text(period.label, style = MaterialTheme.typography.labelSmall)
-                    }
+                        label = { Text(period.label, style = MaterialTheme.typography.labelSmall) },
+                        modifier = Modifier.weight(1f)
+                    )
                 }
             }
             
