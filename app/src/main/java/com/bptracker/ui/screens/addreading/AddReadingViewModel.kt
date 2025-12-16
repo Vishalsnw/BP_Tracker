@@ -1,0 +1,118 @@
+package com.bptracker.ui.screens.addreading
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.bptracker.data.model.*
+import com.bptracker.data.repository.BloodPressureRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
+import java.time.LocalDateTime
+import javax.inject.Inject
+
+data class AddReadingUiState(
+    val readingId: Long? = null,
+    val systolic: Int = 120,
+    val diastolic: Int = 80,
+    val pulse: Int = 72,
+    val notes: String = "",
+    val tag: ReadingTag = ReadingTag.NONE,
+    val armPosition: ArmPosition = ArmPosition.LEFT,
+    val bodyPosition: BodyPosition = BodyPosition.SITTING,
+    val timestamp: LocalDateTime = LocalDateTime.now(),
+    val isFavorite: Boolean = false,
+    val isLoading: Boolean = false,
+    val isSaved: Boolean = false,
+    val error: String? = null
+)
+
+@HiltViewModel
+class AddReadingViewModel @Inject constructor(
+    private val repository: BloodPressureRepository
+) : ViewModel() {
+    
+    private val _uiState = MutableStateFlow(AddReadingUiState())
+    val uiState: StateFlow<AddReadingUiState> = _uiState.asStateFlow()
+    
+    fun loadReading(id: Long) {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true) }
+            val reading = repository.getReadingById(id)
+            if (reading != null) {
+                _uiState.update { state ->
+                    state.copy(
+                        readingId = reading.id,
+                        systolic = reading.systolic,
+                        diastolic = reading.diastolic,
+                        pulse = reading.pulse,
+                        notes = reading.notes,
+                        tag = reading.tag,
+                        armPosition = reading.armPosition,
+                        bodyPosition = reading.bodyPosition,
+                        timestamp = reading.timestamp,
+                        isFavorite = reading.isFavorite,
+                        isLoading = false
+                    )
+                }
+            } else {
+                _uiState.update { it.copy(isLoading = false, error = "Reading not found") }
+            }
+        }
+    }
+    
+    fun updateSystolic(value: Int) {
+        _uiState.update { it.copy(systolic = value) }
+    }
+    
+    fun updateDiastolic(value: Int) {
+        _uiState.update { it.copy(diastolic = value) }
+    }
+    
+    fun updatePulse(value: Int) {
+        _uiState.update { it.copy(pulse = value) }
+    }
+    
+    fun updateNotes(value: String) {
+        _uiState.update { it.copy(notes = value) }
+    }
+    
+    fun updateTag(value: ReadingTag) {
+        _uiState.update { it.copy(tag = value) }
+    }
+    
+    fun updateArmPosition(value: ArmPosition) {
+        _uiState.update { it.copy(armPosition = value) }
+    }
+    
+    fun updateBodyPosition(value: BodyPosition) {
+        _uiState.update { it.copy(bodyPosition = value) }
+    }
+    
+    fun saveReading() {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true) }
+            
+            val state = _uiState.value
+            val reading = BloodPressureReading(
+                id = state.readingId ?: 0,
+                systolic = state.systolic,
+                diastolic = state.diastolic,
+                pulse = state.pulse,
+                notes = state.notes,
+                tag = state.tag,
+                armPosition = state.armPosition,
+                bodyPosition = state.bodyPosition,
+                timestamp = if (state.readingId != null) state.timestamp else LocalDateTime.now(),
+                isFavorite = state.isFavorite
+            )
+            
+            if (state.readingId != null && state.readingId > 0) {
+                repository.updateReading(reading)
+            } else {
+                repository.insertReading(reading)
+            }
+            
+            _uiState.update { it.copy(isLoading = false, isSaved = true) }
+        }
+    }
+}
