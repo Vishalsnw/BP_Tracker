@@ -23,7 +23,15 @@ data class AddReadingUiState(
     val isFavorite: Boolean = false,
     val isLoading: Boolean = false,
     val isSaved: Boolean = false,
-    val error: String? = null
+    val error: String? = null,
+    val validationError: ValidationError? = null
+)
+
+data class ValidationError(
+    val systolicError: String? = null,
+    val diastolicError: String? = null,
+    val pulseError: String? = null,
+    val relationError: String? = null
 )
 
 @HiltViewModel
@@ -33,6 +41,15 @@ class AddReadingViewModel @Inject constructor(
     
     private val _uiState = MutableStateFlow(AddReadingUiState())
     val uiState: StateFlow<AddReadingUiState> = _uiState.asStateFlow()
+    
+    companion object {
+        const val MIN_SYSTOLIC = 70
+        const val MAX_SYSTOLIC = 250
+        const val MIN_DIASTOLIC = 40
+        const val MAX_DIASTOLIC = 150
+        const val MIN_PULSE = 30
+        const val MAX_PULSE = 220
+    }
     
     fun loadReading(id: Long) {
         viewModelScope.launch {
@@ -61,15 +78,15 @@ class AddReadingViewModel @Inject constructor(
     }
     
     fun updateSystolic(value: Int) {
-        _uiState.update { it.copy(systolic = value) }
+        _uiState.update { it.copy(systolic = value, validationError = null) }
     }
     
     fun updateDiastolic(value: Int) {
-        _uiState.update { it.copy(diastolic = value) }
+        _uiState.update { it.copy(diastolic = value, validationError = null) }
     }
     
     fun updatePulse(value: Int) {
-        _uiState.update { it.copy(pulse = value) }
+        _uiState.update { it.copy(pulse = value, validationError = null) }
     }
     
     fun updateNotes(value: String) {
@@ -88,7 +105,46 @@ class AddReadingViewModel @Inject constructor(
         _uiState.update { it.copy(bodyPosition = value) }
     }
     
+    private fun validateReadings(): ValidationError? {
+        val state = _uiState.value
+        var error = ValidationError()
+        var hasError = false
+        
+        if (state.systolic < MIN_SYSTOLIC || state.systolic > MAX_SYSTOLIC) {
+            error = error.copy(systolicError = "Systolic should be between $MIN_SYSTOLIC-$MAX_SYSTOLIC mmHg")
+            hasError = true
+        }
+        
+        if (state.diastolic < MIN_DIASTOLIC || state.diastolic > MAX_DIASTOLIC) {
+            error = error.copy(diastolicError = "Diastolic should be between $MIN_DIASTOLIC-$MAX_DIASTOLIC mmHg")
+            hasError = true
+        }
+        
+        if (state.pulse < MIN_PULSE || state.pulse > MAX_PULSE) {
+            error = error.copy(pulseError = "Pulse should be between $MIN_PULSE-$MAX_PULSE bpm")
+            hasError = true
+        }
+        
+        if (state.systolic <= state.diastolic) {
+            error = error.copy(relationError = "Systolic must be higher than diastolic")
+            hasError = true
+        }
+        
+        if (state.systolic - state.diastolic < 10) {
+            error = error.copy(relationError = "Pulse pressure (difference) should be at least 10 mmHg")
+            hasError = true
+        }
+        
+        return if (hasError) error else null
+    }
+    
     fun saveReading() {
+        val validationError = validateReadings()
+        if (validationError != null) {
+            _uiState.update { it.copy(validationError = validationError) }
+            return
+        }
+        
         viewModelScope.launch {
             _uiState.update { it.copy(isLoading = true) }
             
@@ -114,5 +170,9 @@ class AddReadingViewModel @Inject constructor(
             
             _uiState.update { it.copy(isLoading = false, isSaved = true) }
         }
+    }
+    
+    fun clearError() {
+        _uiState.update { it.copy(validationError = null, error = null) }
     }
 }
