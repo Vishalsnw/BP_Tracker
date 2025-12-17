@@ -20,6 +20,9 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 @Composable
 fun SettingsScreen(
     onNavigateToReminders: () -> Unit,
+    onNavigateToMedications: () -> Unit = {},
+    onNavigateToProfiles: () -> Unit = {},
+    onNavigateToBreathing: () -> Unit = {},
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -94,6 +97,30 @@ fun SettingsScreen(
                 .padding(padding)
                 .verticalScroll(rememberScrollState())
         ) {
+            SettingsSection(title = "Profiles") {
+                SettingsItem(
+                    icon = Icons.Filled.People,
+                    title = "Family Profiles",
+                    subtitle = "Manage profiles for multiple family members",
+                    onClick = onNavigateToProfiles
+                )
+            }
+            
+            SettingsSection(title = "Health") {
+                SettingsItem(
+                    icon = Icons.Filled.Medication,
+                    title = "Medications",
+                    subtitle = "Track your blood pressure medications",
+                    onClick = onNavigateToMedications
+                )
+                SettingsItem(
+                    icon = Icons.Filled.Air,
+                    title = "Breathing Exercises",
+                    subtitle = "Guided relaxation to help lower blood pressure",
+                    onClick = onNavigateToBreathing
+                )
+            }
+            
             SettingsSection(title = "Notifications") {
                 SettingsItem(
                     icon = Icons.Filled.Alarm,
@@ -109,6 +136,18 @@ fun SettingsScreen(
                     title = "Export to PDF",
                     subtitle = "Export your readings history",
                     onClick = { viewModel.exportData() }
+                )
+                SettingsItem(
+                    icon = Icons.Filled.TableChart,
+                    title = "Export to CSV",
+                    subtitle = "Export for spreadsheet analysis",
+                    onClick = { viewModel.exportCsv() }
+                )
+                SettingsItem(
+                    icon = Icons.Filled.LocalHospital,
+                    title = "Doctor Visit Report",
+                    subtitle = "Generate a summary report for your doctor",
+                    onClick = { viewModel.generateDoctorReport() }
                 )
                 SettingsItem(
                     icon = Icons.Filled.DeleteForever,

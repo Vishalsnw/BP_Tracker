@@ -315,7 +315,150 @@ fun AddReadingScreen(
                 maxLines = 5
             )
             
+            Spacer(modifier = Modifier.height(16.dp))
+            
+            Card(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Column(
+                    modifier = Modifier.padding(16.dp)
+                ) {
+                    Text(
+                        text = "How are you feeling?",
+                        style = MaterialTheme.typography.titleSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    
+                    Spacer(modifier = Modifier.height(12.dp))
+                    
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceEvenly
+                    ) {
+                        MoodButton(emoji = "1", label = "Very Stressed", selected = uiState.mood == 1) {
+                            viewModel.updateMood(1)
+                        }
+                        MoodButton(emoji = "2", label = "Stressed", selected = uiState.mood == 2) {
+                            viewModel.updateMood(2)
+                        }
+                        MoodButton(emoji = "3", label = "Neutral", selected = uiState.mood == 3) {
+                            viewModel.updateMood(3)
+                        }
+                        MoodButton(emoji = "4", label = "Happy", selected = uiState.mood == 4) {
+                            viewModel.updateMood(4)
+                        }
+                        MoodButton(emoji = "5", label = "Very Happy", selected = uiState.mood == 5) {
+                            viewModel.updateMood(5)
+                        }
+                    }
+                    
+                    Spacer(modifier = Modifier.height(16.dp))
+                    
+                    Text(
+                        text = "Stress Level",
+                        style = MaterialTheme.typography.titleSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    
+                    Spacer(modifier = Modifier.height(8.dp))
+                    
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        listOf("None" to 1, "Low" to 2, "Moderate" to 3, "High" to 4, "Severe" to 5).forEach { (label, value) ->
+                            FilterChip(
+                                selected = uiState.stressLevel == value,
+                                onClick = { viewModel.updateStressLevel(value) },
+                                label = { Text(label, style = MaterialTheme.typography.labelSmall) },
+                                modifier = Modifier.weight(1f)
+                            )
+                        }
+                    }
+                }
+            }
+            
+            if (uiState.validationError != null) {
+                Spacer(modifier = Modifier.height(16.dp))
+                Card(
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.errorContainer
+                    ),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Column(
+                        modifier = Modifier.padding(16.dp)
+                    ) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Icon(
+                                Icons.Filled.Warning,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.error
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text(
+                                "Please check your readings",
+                                style = MaterialTheme.typography.titleSmall,
+                                color = MaterialTheme.colorScheme.error
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(8.dp))
+                        uiState.validationError?.systolicError?.let {
+                            Text(it, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onErrorContainer)
+                        }
+                        uiState.validationError?.diastolicError?.let {
+                            Text(it, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onErrorContainer)
+                        }
+                        uiState.validationError?.pulseError?.let {
+                            Text(it, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onErrorContainer)
+                        }
+                        uiState.validationError?.relationError?.let {
+                            Text(it, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onErrorContainer)
+                        }
+                    }
+                }
+            }
+            
             Spacer(modifier = Modifier.height(32.dp))
         }
+    }
+}
+
+@Composable
+private fun MoodButton(
+    emoji: String,
+    label: String,
+    selected: Boolean,
+    onClick: () -> Unit
+) {
+    val moodEmoji = when(emoji) {
+        "1" -> "X"
+        "2" -> "-"
+        "3" -> "O"
+        "4" -> "+"
+        "5" -> "*"
+        else -> "O"
+    }
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        FilterChip(
+            selected = selected,
+            onClick = onClick,
+            label = { 
+                Text(
+                    text = moodEmoji,
+                    style = MaterialTheme.typography.titleLarge
+                )
+            }
+        )
+        Spacer(modifier = Modifier.height(4.dp))
+        Text(
+            text = label,
+            style = MaterialTheme.typography.labelSmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
     }
 }

@@ -3,4 +3,5 @@
     <string name="app_name">Blood Pressure Tracker</string>
     <string name="notification_channel_name">Measurement Reminders</string>
     <string name="notification_channel_description">Reminders to measure your blood pressure</string>
+    <string name="widget_description">Quick access to log blood pressure readings</string>
 </resources>

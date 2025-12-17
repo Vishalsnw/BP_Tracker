@@ -12,6 +12,7 @@ import java.time.format.DateTimeFormatter
 data class BloodPressureReading(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
+    val profileId: Long = 1,
     val systolic: Int,
     val diastolic: Int,
     val pulse: Int,
@@ -20,7 +21,11 @@ data class BloodPressureReading(
     val tag: ReadingTag = ReadingTag.NONE,
     val armPosition: ArmPosition = ArmPosition.LEFT,
     val bodyPosition: BodyPosition = BodyPosition.SITTING,
-    val isFavorite: Boolean = false
+    val isFavorite: Boolean = false,
+    val mood: Int = 3,
+    val stressLevel: Int = 1,
+    val sessionId: String? = null,
+    val isAveraged: Boolean = false
 ) : Parcelable {
     
     val category: BloodPressureCategory
@@ -33,6 +38,15 @@ data class BloodPressureReading(
             else -> BloodPressureCategory.NORMAL
         }
     
+    val meanArterialPressure: Double
+        get() = ((2.0 * diastolic) + systolic) / 3.0
+    
+    val pulsePressure: Int
+        get() = systolic - diastolic
+    
+    val isCrisis: Boolean
+        get() = category == BloodPressureCategory.HYPERTENSIVE_CRISIS
+    
     val formattedDate: String
         get() = timestamp.format(DateTimeFormatter.ofPattern("MMM dd, yyyy"))
     
@@ -41,6 +55,9 @@ data class BloodPressureReading(
     
     val formattedDateTime: String
         get() = timestamp.format(DateTimeFormatter.ofPattern("MMM dd, yyyy - hh:mm a"))
+    
+    val formattedMAP: String
+        get() = "%.0f".format(meanArterialPressure)
 }
 
 enum class BloodPressureCategory(val label: String, val description: String) {

@@ -21,6 +21,8 @@ data class AddReadingUiState(
     val bodyPosition: BodyPosition = BodyPosition.SITTING,
     val timestamp: LocalDateTime = LocalDateTime.now(),
     val isFavorite: Boolean = false,
+    val mood: Int = 3,
+    val stressLevel: Int = 1,
     val isLoading: Boolean = false,
     val isSaved: Boolean = false,
     val error: String? = null,
@@ -105,6 +107,14 @@ class AddReadingViewModel @Inject constructor(
         _uiState.update { it.copy(bodyPosition = value) }
     }
     
+    fun updateMood(value: Int) {
+        _uiState.update { it.copy(mood = value) }
+    }
+    
+    fun updateStressLevel(value: Int) {
+        _uiState.update { it.copy(stressLevel = value) }
+    }
+    
     private fun validateReadings(): ValidationError? {
         val state = _uiState.value
         var error = ValidationError()
@@ -159,7 +169,9 @@ class AddReadingViewModel @Inject constructor(
                 armPosition = state.armPosition,
                 bodyPosition = state.bodyPosition,
                 timestamp = if (state.readingId != null) state.timestamp else LocalDateTime.now(),
-                isFavorite = state.isFavorite
+                isFavorite = state.isFavorite,
+                mood = state.mood,
+                stressLevel = state.stressLevel
             )
             
             if (state.readingId != null && state.readingId > 0) {

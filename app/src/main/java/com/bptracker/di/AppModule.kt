@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.Room
 import com.bptracker.data.database.BloodPressureDao
 import com.bptracker.data.database.BloodPressureDatabase
+import com.bptracker.data.database.MedicationDao
+import com.bptracker.data.database.ProfileDao
 import com.bptracker.data.database.ReminderDao
 import dagger.Module
 import dagger.Provides
@@ -23,7 +25,9 @@ object AppModule {
             context,
             BloodPressureDatabase::class.java,
             "blood_pressure_database"
-        ).build()
+        )
+            .addMigrations(BloodPressureDatabase.MIGRATION_1_2)
+            .build()
     }
     
     @Provides
@@ -36,5 +40,17 @@ object AppModule {
     @Singleton
     fun provideReminderDao(database: BloodPressureDatabase): ReminderDao {
         return database.reminderDao()
+    }
+    
+    @Provides
+    @Singleton
+    fun provideMedicationDao(database: BloodPressureDatabase): MedicationDao {
+        return database.medicationDao()
+    }
+    
+    @Provides
+    @Singleton
+    fun provideProfileDao(database: BloodPressureDatabase): ProfileDao {
+        return database.profileDao()
     }
 }

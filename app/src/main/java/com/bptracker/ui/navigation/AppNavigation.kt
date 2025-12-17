@@ -19,11 +19,17 @@ import androidx.navigation.navArgument
 import com.bptracker.ui.screens.addreading.AddReadingScreen
 import com.bptracker.ui.screens.articles.ArticleDetailScreen
 import com.bptracker.ui.screens.articles.ArticlesScreen
+import com.bptracker.ui.screens.breathing.BreathingExerciseScreen
 import com.bptracker.ui.screens.history.HistoryScreen
 import com.bptracker.ui.screens.home.HomeScreen
+import com.bptracker.ui.screens.medication.MedicationScreen
+import com.bptracker.ui.screens.profile.ProfileScreen
+import com.bptracker.ui.screens.quickentry.QuickEntryScreen
+import com.bptracker.ui.screens.relaxation.WhiteCoatHelperScreen
 import com.bptracker.ui.screens.reminder.ReminderScreen
 import com.bptracker.ui.screens.settings.SettingsScreen
 import com.bptracker.ui.screens.statistics.StatisticsScreen
+import com.bptracker.ui.screens.voice.VoiceInputScreen
 
 sealed class Screen(
     val route: String,
@@ -40,6 +46,12 @@ sealed class Screen(
     object EditReading : Screen("edit_reading/{readingId}", "Edit Reading", Icons.Filled.Edit, Icons.Outlined.Edit)
     object Reminders : Screen("reminders", "Reminders", Icons.Filled.Alarm, Icons.Outlined.Alarm)
     object ArticleDetail : Screen("article/{articleId}", "Article", Icons.Filled.Article, Icons.Outlined.Article)
+    object QuickEntry : Screen("quick_entry", "Quick Entry", Icons.Filled.Speed, Icons.Outlined.Speed)
+    object VoiceInput : Screen("voice_input", "Voice Input", Icons.Filled.Mic, Icons.Outlined.Mic)
+    object Medications : Screen("medications", "Medications", Icons.Filled.Medication, Icons.Outlined.Medication)
+    object Profiles : Screen("profiles", "Profiles", Icons.Filled.People, Icons.Outlined.People)
+    object Breathing : Screen("breathing", "Breathing", Icons.Filled.Air, Icons.Outlined.Air)
+    object WhiteCoatHelper : Screen("white_coat_helper", "Relax", Icons.Filled.SelfImprovement, Icons.Outlined.SelfImprovement)
 }
 
 val bottomNavItems = listOf(
@@ -123,7 +135,10 @@ fun AppNavigation() {
             
             composable(Screen.Settings.route) {
                 SettingsScreen(
-                    onNavigateToReminders = { navController.navigate(Screen.Reminders.route) }
+                    onNavigateToReminders = { navController.navigate(Screen.Reminders.route) },
+                    onNavigateToMedications = { navController.navigate(Screen.Medications.route) },
+                    onNavigateToProfiles = { navController.navigate(Screen.Profiles.route) },
+                    onNavigateToBreathing = { navController.navigate(Screen.Breathing.route) }
                 )
             }
             
@@ -158,6 +173,50 @@ fun AppNavigation() {
                 ArticleDetailScreen(
                     articleId = articleId,
                     onNavigateBack = { navController.popBackStack() }
+                )
+            }
+            
+            composable(Screen.QuickEntry.route) {
+                QuickEntryScreen(
+                    onNavigateBack = { navController.popBackStack() },
+                    onExpandToFull = { 
+                        navController.popBackStack()
+                        navController.navigate(Screen.AddReading.route)
+                    }
+                )
+            }
+            
+            composable(Screen.VoiceInput.route) {
+                VoiceInputScreen(
+                    onNavigateBack = { navController.popBackStack() }
+                )
+            }
+            
+            composable(Screen.Medications.route) {
+                MedicationScreen(
+                    onNavigateBack = { navController.popBackStack() }
+                )
+            }
+            
+            composable(Screen.Profiles.route) {
+                ProfileScreen(
+                    onNavigateBack = { navController.popBackStack() }
+                )
+            }
+            
+            composable(Screen.Breathing.route) {
+                BreathingExerciseScreen(
+                    onNavigateBack = { navController.popBackStack() }
+                )
+            }
+            
+            composable(Screen.WhiteCoatHelper.route) {
+                WhiteCoatHelperScreen(
+                    onNavigateBack = { navController.popBackStack() },
+                    onStartMeasurement = {
+                        navController.popBackStack()
+                        navController.navigate(Screen.AddReading.route)
+                    }
                 )
             }
         }
