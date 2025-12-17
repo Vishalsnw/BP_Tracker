@@ -20,7 +20,7 @@ import com.bptracker.data.model.UserProfile
         UserProfile::class
     ],
     version = 2,
-    exportSchema = true
+    exportSchema = false
 )
 @TypeConverters(Converters::class)
 abstract class BloodPressureDatabase : RoomDatabase() {

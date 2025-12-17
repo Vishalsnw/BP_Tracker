@@ -3,6 +3,7 @@ package com.bptracker.data.database
 import androidx.room.TypeConverter
 import com.bptracker.data.model.ArmPosition
 import com.bptracker.data.model.BodyPosition
+import com.bptracker.data.model.MedicationFrequency
 import com.bptracker.data.model.ReadingTag
 import java.time.DayOfWeek
 import java.time.LocalDateTime
@@ -35,6 +36,17 @@ class Converters {
     }
     
     @TypeConverter
+    fun fromLocalTimeList(value: List<LocalTime>?): String? {
+        return value?.joinToString(",") { it.format(timeFormatter) }
+    }
+    
+    @TypeConverter
+    fun toLocalTimeList(value: String?): List<LocalTime>? {
+        if (value.isNullOrBlank()) return emptyList()
+        return value.split(",").filter { it.isNotBlank() }.map { LocalTime.parse(it, timeFormatter) }
+    }
+    
+    @TypeConverter
     fun fromDayOfWeekSet(value: Set<DayOfWeek>?): String? {
         return value?.joinToString(",") { it.name }
     }
@@ -61,4 +73,10 @@ class Converters {
     
     @TypeConverter
     fun toBodyPosition(value: String): BodyPosition = BodyPosition.valueOf(value)
+    
+    @TypeConverter
+    fun fromMedicationFrequency(value: MedicationFrequency): String = value.name
+    
+    @TypeConverter
+    fun toMedicationFrequency(value: String): MedicationFrequency = MedicationFrequency.valueOf(value)
 }
