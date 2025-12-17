@@ -102,7 +102,21 @@ Key dependencies are defined in `app/build.gradle.kts`:
   - Fixed Room DAO queries to use String parameters instead of LocalDateTime
   - Updated BloodPressureRepository to convert LocalDateTime to String for database queries
   - Enhanced ProGuard rules for release builds (Compose, Room, Hilt, Vico charts, etc.)
+- Major Feature Expansion (December 2025):
+  - Added Weight Tracking with BMI calculation and trend analysis
+  - Added Blood Glucose Tracking with fasting/post-meal/random types
+  - Added Health Goals system with progress tracking and achievements
+  - Added AI-powered Insights and Analytics screen
+  - Added Alert Management for threshold, crisis, and weekly summary notifications
+  - Added CSV Export for weight, glucose, and combined health data
+  - Database upgraded to version 3 with new tables: goals, achievements, weight_entries, glucose_entries, alert_settings, insights
+  - New repositories: GoalRepository, WeightRepository, GlucoseRepository, AlertRepository, InsightRepository
+  - New utilities: InsightGenerator (pattern analysis), AlertManager (notification handling)
+  - Updated Settings screen with new Health Tracking and Goals & Insights sections
+  - Updated Navigation to support all new screens
 
 ## User Preferences
 - User will build the app via GitHub Actions YAML workflow (to be created upon request)
 - No emojis in code or documentation
+- Implement ALL suggested improvements, not selective
+- Follow Material 3 design patterns consistently

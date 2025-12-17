@@ -23,6 +23,10 @@ fun SettingsScreen(
     onNavigateToMedications: () -> Unit = {},
     onNavigateToProfiles: () -> Unit = {},
     onNavigateToBreathing: () -> Unit = {},
+    onNavigateToWeight: () -> Unit = {},
+    onNavigateToGlucose: () -> Unit = {},
+    onNavigateToGoals: () -> Unit = {},
+    onNavigateToInsights: () -> Unit = {},
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -106,7 +110,19 @@ fun SettingsScreen(
                 )
             }
             
-            SettingsSection(title = "Health") {
+            SettingsSection(title = "Health Tracking") {
+                SettingsItem(
+                    icon = Icons.Filled.MonitorWeight,
+                    title = "Weight Tracking",
+                    subtitle = "Track weight and BMI",
+                    onClick = onNavigateToWeight
+                )
+                SettingsItem(
+                    icon = Icons.Filled.Bloodtype,
+                    title = "Blood Glucose",
+                    subtitle = "Monitor blood sugar levels",
+                    onClick = onNavigateToGlucose
+                )
                 SettingsItem(
                     icon = Icons.Filled.Medication,
                     title = "Medications",
@@ -118,6 +134,21 @@ fun SettingsScreen(
                     title = "Breathing Exercises",
                     subtitle = "Guided relaxation to help lower blood pressure",
                     onClick = onNavigateToBreathing
+                )
+            }
+            
+            SettingsSection(title = "Goals & Insights") {
+                SettingsItem(
+                    icon = Icons.Filled.Flag,
+                    title = "Health Goals",
+                    subtitle = "Set and track your health targets",
+                    onClick = onNavigateToGoals
+                )
+                SettingsItem(
+                    icon = Icons.Filled.Insights,
+                    title = "Insights & Analytics",
+                    subtitle = "Personalized health insights based on your data",
+                    onClick = onNavigateToInsights
                 )
             }
             

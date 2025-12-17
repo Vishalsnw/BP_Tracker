@@ -13,6 +13,9 @@ interface BloodPressureDao {
     @Query("SELECT * FROM blood_pressure_readings ORDER BY timestamp DESC LIMIT :limit")
     fun getRecentReadings(limit: Int): Flow<List<BloodPressureReading>>
     
+    @Query("SELECT * FROM blood_pressure_readings ORDER BY timestamp DESC LIMIT :limit")
+    suspend fun getRecentReadingsSync(limit: Int): List<BloodPressureReading>
+    
     @Query("SELECT * FROM blood_pressure_readings WHERE timestamp >= :startDate AND timestamp <= :endDate ORDER BY timestamp DESC")
     fun getReadingsInRange(startDate: String, endDate: String): Flow<List<BloodPressureReading>>
     

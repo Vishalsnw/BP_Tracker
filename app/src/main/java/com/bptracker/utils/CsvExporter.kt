@@ -81,4 +81,89 @@ object CsvExporter {
         5 -> "Severe"
         else -> "Unknown"
     }
+    
+    fun exportWeightEntries(context: Context, entries: List<com.bptracker.data.model.WeightEntry>) {
+        try {
+            val exportDir = File(context.cacheDir, "exports")
+            if (!exportDir.exists()) {
+                exportDir.mkdirs()
+            }
+            
+            val fileName = "weight_entries_${LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"))}.csv"
+            val file = File(exportDir, fileName)
+            
+            FileWriter(file).use { writer ->
+                writer.appendLine("Date,Weight (kg),Weight (lbs),Height (cm),BMI,BMI Category,Notes")
+                
+                entries.forEach { entry ->
+                    val date = entry.timestamp.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
+                    val notes = entry.notes.replace(",", ";").replace("\n", " ")
+                    
+                    writer.appendLine(
+                        "$date,${"%.1f".format(entry.weightKg)},${"%.1f".format(entry.weightLbs)}," +
+                        "${entry.heightCm ?: ""},${entry.bmi?.let { "%.1f".format(it) } ?: ""}," +
+                        "${entry.bmiCategory?.label ?: ""},\"$notes\""
+                    )
+                }
+            }
+            
+            shareFile(context, file)
+            
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Toast.makeText(context, "Failed to export CSV: ${e.message}", Toast.LENGTH_LONG).show()
+        }
+    }
+    
+    fun exportGlucoseEntries(context: Context, entries: List<com.bptracker.data.model.GlucoseEntry>) {
+        try {
+            val exportDir = File(context.cacheDir, "exports")
+            if (!exportDir.exists()) {
+                exportDir.mkdirs()
+            }
+            
+            val fileName = "glucose_entries_${LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"))}.csv"
+            val file = File(exportDir, fileName)
+            
+            FileWriter(file).use { writer ->
+                writer.appendLine("Date,Time,Glucose (mg/dL),Glucose (mmol/L),Type,Category,Notes")
+                
+                entries.forEach { entry ->
+                    val date = entry.timestamp.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"))
+                    val time = entry.timestamp.format(DateTimeFormatter.ofPattern("HH:mm"))
+                    val notes = entry.notes.replace(",", ";").replace("\n", " ")
+                    
+                    writer.appendLine(
+                        "$date,$time,${"%.0f".format(entry.glucoseMgDl)},${"%.1f".format(entry.glucoseMmolL)}," +
+                        "${entry.type.label},${entry.category.label},\"$notes\""
+                    )
+                }
+            }
+            
+            shareFile(context, file)
+            
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Toast.makeText(context, "Failed to export CSV: ${e.message}", Toast.LENGTH_LONG).show()
+        }
+    }
+    
+    private fun shareFile(context: Context, file: File) {
+        val uri = FileProvider.getUriForFile(
+            context,
+            "${context.packageName}.fileprovider",
+            file
+        )
+        
+        val shareIntent = Intent(Intent.ACTION_SEND).apply {
+            type = "text/csv"
+            putExtra(Intent.EXTRA_STREAM, uri)
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+        
+        context.startActivity(Intent.createChooser(shareIntent, "Share CSV").apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        })
+    }
 }

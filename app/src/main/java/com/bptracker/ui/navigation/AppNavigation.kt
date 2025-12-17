@@ -20,8 +20,11 @@ import com.bptracker.ui.screens.addreading.AddReadingScreen
 import com.bptracker.ui.screens.articles.ArticleDetailScreen
 import com.bptracker.ui.screens.articles.ArticlesScreen
 import com.bptracker.ui.screens.breathing.BreathingExerciseScreen
+import com.bptracker.ui.screens.glucose.GlucoseScreen
+import com.bptracker.ui.screens.goals.GoalsScreen
 import com.bptracker.ui.screens.history.HistoryScreen
 import com.bptracker.ui.screens.home.HomeScreen
+import com.bptracker.ui.screens.insights.InsightsScreen
 import com.bptracker.ui.screens.medication.MedicationScreen
 import com.bptracker.ui.screens.profile.ProfileScreen
 import com.bptracker.ui.screens.quickentry.QuickEntryScreen
@@ -30,6 +33,7 @@ import com.bptracker.ui.screens.reminder.ReminderScreen
 import com.bptracker.ui.screens.settings.SettingsScreen
 import com.bptracker.ui.screens.statistics.StatisticsScreen
 import com.bptracker.ui.screens.voice.VoiceInputScreen
+import com.bptracker.ui.screens.weight.WeightScreen
 
 sealed class Screen(
     val route: String,
@@ -52,6 +56,10 @@ sealed class Screen(
     object Profiles : Screen("profiles", "Profiles", Icons.Filled.People, Icons.Outlined.People)
     object Breathing : Screen("breathing", "Breathing", Icons.Filled.Air, Icons.Outlined.Air)
     object WhiteCoatHelper : Screen("white_coat_helper", "Relax", Icons.Filled.SelfImprovement, Icons.Outlined.SelfImprovement)
+    object Weight : Screen("weight", "Weight", Icons.Filled.MonitorWeight, Icons.Outlined.MonitorWeight)
+    object Glucose : Screen("glucose", "Glucose", Icons.Filled.Bloodtype, Icons.Outlined.Bloodtype)
+    object Goals : Screen("goals", "Goals", Icons.Filled.Flag, Icons.Outlined.Flag)
+    object Insights : Screen("insights", "Insights", Icons.Filled.Insights, Icons.Outlined.Insights)
 }
 
 val bottomNavItems = listOf(
@@ -138,7 +146,11 @@ fun AppNavigation() {
                     onNavigateToReminders = { navController.navigate(Screen.Reminders.route) },
                     onNavigateToMedications = { navController.navigate(Screen.Medications.route) },
                     onNavigateToProfiles = { navController.navigate(Screen.Profiles.route) },
-                    onNavigateToBreathing = { navController.navigate(Screen.Breathing.route) }
+                    onNavigateToBreathing = { navController.navigate(Screen.Breathing.route) },
+                    onNavigateToWeight = { navController.navigate(Screen.Weight.route) },
+                    onNavigateToGlucose = { navController.navigate(Screen.Glucose.route) },
+                    onNavigateToGoals = { navController.navigate(Screen.Goals.route) },
+                    onNavigateToInsights = { navController.navigate(Screen.Insights.route) }
                 )
             }
             
@@ -217,6 +229,30 @@ fun AppNavigation() {
                         navController.popBackStack()
                         navController.navigate(Screen.AddReading.route)
                     }
+                )
+            }
+            
+            composable(Screen.Weight.route) {
+                WeightScreen(
+                    onNavigateBack = { navController.popBackStack() }
+                )
+            }
+            
+            composable(Screen.Glucose.route) {
+                GlucoseScreen(
+                    onNavigateBack = { navController.popBackStack() }
+                )
+            }
+            
+            composable(Screen.Goals.route) {
+                GoalsScreen(
+                    onNavigateBack = { navController.popBackStack() }
+                )
+            }
+            
+            composable(Screen.Insights.route) {
+                InsightsScreen(
+                    onNavigateBack = { navController.popBackStack() }
                 )
             }
         }
