@@ -3,7 +3,6 @@ package com.bptracker.data.database
 import androidx.room.*
 import com.bptracker.data.model.BloodPressureReading
 import kotlinx.coroutines.flow.Flow
-import java.time.LocalDateTime
 
 @Dao
 interface BloodPressureDao {
@@ -15,10 +14,10 @@ interface BloodPressureDao {
     fun getRecentReadings(limit: Int): Flow<List<BloodPressureReading>>
     
     @Query("SELECT * FROM blood_pressure_readings WHERE timestamp >= :startDate AND timestamp <= :endDate ORDER BY timestamp DESC")
-    fun getReadingsInRange(startDate: LocalDateTime, endDate: LocalDateTime): Flow<List<BloodPressureReading>>
+    fun getReadingsInRange(startDate: String, endDate: String): Flow<List<BloodPressureReading>>
     
     @Query("SELECT * FROM blood_pressure_readings WHERE timestamp >= :startDate AND timestamp <= :endDate ORDER BY timestamp ASC")
-    suspend fun getReadingsInRangeSync(startDate: LocalDateTime, endDate: LocalDateTime): List<BloodPressureReading>
+    suspend fun getReadingsInRangeSync(startDate: String, endDate: String): List<BloodPressureReading>
     
     @Query("SELECT * FROM blood_pressure_readings WHERE isFavorite = 1 ORDER BY timestamp DESC")
     fun getFavoriteReadings(): Flow<List<BloodPressureReading>>
@@ -27,28 +26,28 @@ interface BloodPressureDao {
     suspend fun getReadingById(id: Long): BloodPressureReading?
     
     @Query("SELECT AVG(systolic) FROM blood_pressure_readings WHERE timestamp >= :startDate")
-    suspend fun getAverageSystolic(startDate: LocalDateTime): Double?
+    suspend fun getAverageSystolic(startDate: String): Double?
     
     @Query("SELECT AVG(diastolic) FROM blood_pressure_readings WHERE timestamp >= :startDate")
-    suspend fun getAverageDiastolic(startDate: LocalDateTime): Double?
+    suspend fun getAverageDiastolic(startDate: String): Double?
     
     @Query("SELECT AVG(pulse) FROM blood_pressure_readings WHERE timestamp >= :startDate")
-    suspend fun getAveragePulse(startDate: LocalDateTime): Double?
+    suspend fun getAveragePulse(startDate: String): Double?
     
     @Query("SELECT MAX(systolic) FROM blood_pressure_readings WHERE timestamp >= :startDate")
-    suspend fun getMaxSystolic(startDate: LocalDateTime): Int?
+    suspend fun getMaxSystolic(startDate: String): Int?
     
     @Query("SELECT MAX(diastolic) FROM blood_pressure_readings WHERE timestamp >= :startDate")
-    suspend fun getMaxDiastolic(startDate: LocalDateTime): Int?
+    suspend fun getMaxDiastolic(startDate: String): Int?
     
     @Query("SELECT MIN(systolic) FROM blood_pressure_readings WHERE timestamp >= :startDate")
-    suspend fun getMinSystolic(startDate: LocalDateTime): Int?
+    suspend fun getMinSystolic(startDate: String): Int?
     
     @Query("SELECT MIN(diastolic) FROM blood_pressure_readings WHERE timestamp >= :startDate")
-    suspend fun getMinDiastolic(startDate: LocalDateTime): Int?
+    suspend fun getMinDiastolic(startDate: String): Int?
     
     @Query("SELECT COUNT(*) FROM blood_pressure_readings WHERE timestamp >= :startDate")
-    suspend fun getReadingCount(startDate: LocalDateTime): Int
+    suspend fun getReadingCount(startDate: String): Int
     
     @Query("SELECT COUNT(*) FROM blood_pressure_readings")
     suspend fun getTotalReadingCount(): Int

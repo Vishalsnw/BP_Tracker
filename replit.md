@@ -98,6 +98,10 @@ Key dependencies are defined in `app/build.gradle.kts`:
 - Room database with migrations
 - PDF export functionality
 - Reminder notifications system
+- Fixed crash on startup (December 2025):
+  - Fixed Room DAO queries to use String parameters instead of LocalDateTime
+  - Updated BloodPressureRepository to convert LocalDateTime to String for database queries
+  - Enhanced ProGuard rules for release builds (Compose, Room, Hilt, Vico charts, etc.)
 
 ## User Preferences
 - User will build the app via GitHub Actions YAML workflow (to be created upon request)

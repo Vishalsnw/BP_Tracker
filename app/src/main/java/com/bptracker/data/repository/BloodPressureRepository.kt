@@ -6,6 +6,7 @@ import com.bptracker.data.model.BloodPressureReading
 import com.bptracker.data.model.Statistics
 import kotlinx.coroutines.flow.Flow
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -13,6 +14,9 @@ import javax.inject.Singleton
 class BloodPressureRepository @Inject constructor(
     private val bloodPressureDao: BloodPressureDao
 ) {
+    private val dateTimeFormatter = DateTimeFormatter.ISO_LOCAL_DATE_TIME
+    
+    private fun LocalDateTime.toDbString(): String = this.format(dateTimeFormatter)
     
     fun getAllReadings(): Flow<List<BloodPressureReading>> = bloodPressureDao.getAllReadings()
     
@@ -20,10 +24,10 @@ class BloodPressureRepository @Inject constructor(
         bloodPressureDao.getRecentReadings(limit)
     
     fun getReadingsInRange(startDate: LocalDateTime, endDate: LocalDateTime): Flow<List<BloodPressureReading>> =
-        bloodPressureDao.getReadingsInRange(startDate, endDate)
+        bloodPressureDao.getReadingsInRange(startDate.toDbString(), endDate.toDbString())
     
     suspend fun getReadingsInRangeSync(startDate: LocalDateTime, endDate: LocalDateTime): List<BloodPressureReading> =
-        bloodPressureDao.getReadingsInRangeSync(startDate, endDate)
+        bloodPressureDao.getReadingsInRangeSync(startDate.toDbString(), endDate.toDbString())
     
     fun getFavoriteReadings(): Flow<List<BloodPressureReading>> = bloodPressureDao.getFavoriteReadings()
     
@@ -40,20 +44,22 @@ class BloodPressureRepository @Inject constructor(
     suspend fun getTotalReadingCount(): Int = bloodPressureDao.getTotalReadingCount()
     
     suspend fun getStatistics(startDate: LocalDateTime): Statistics {
-        val readings = bloodPressureDao.getReadingsInRangeSync(startDate, LocalDateTime.now())
+        val startDateStr = startDate.toDbString()
+        val endDateStr = LocalDateTime.now().toDbString()
+        val readings = bloodPressureDao.getReadingsInRangeSync(startDateStr, endDateStr)
         
         if (readings.isEmpty()) return Statistics()
         
         val categoryCount = readings.groupBy { it.category }
         
         return Statistics(
-            averageSystolic = bloodPressureDao.getAverageSystolic(startDate) ?: 0.0,
-            averageDiastolic = bloodPressureDao.getAverageDiastolic(startDate) ?: 0.0,
-            averagePulse = bloodPressureDao.getAveragePulse(startDate) ?: 0.0,
-            maxSystolic = bloodPressureDao.getMaxSystolic(startDate) ?: 0,
-            maxDiastolic = bloodPressureDao.getMaxDiastolic(startDate) ?: 0,
-            minSystolic = bloodPressureDao.getMinSystolic(startDate) ?: 0,
-            minDiastolic = bloodPressureDao.getMinDiastolic(startDate) ?: 0,
+            averageSystolic = bloodPressureDao.getAverageSystolic(startDateStr) ?: 0.0,
+            averageDiastolic = bloodPressureDao.getAverageDiastolic(startDateStr) ?: 0.0,
+            averagePulse = bloodPressureDao.getAveragePulse(startDateStr) ?: 0.0,
+            maxSystolic = bloodPressureDao.getMaxSystolic(startDateStr) ?: 0,
+            maxDiastolic = bloodPressureDao.getMaxDiastolic(startDateStr) ?: 0,
+            minSystolic = bloodPressureDao.getMinSystolic(startDateStr) ?: 0,
+            minDiastolic = bloodPressureDao.getMinDiastolic(startDateStr) ?: 0,
             totalReadings = readings.size,
             normalCount = categoryCount[BloodPressureCategory.NORMAL]?.size ?: 0,
             elevatedCount = categoryCount[BloodPressureCategory.ELEVATED]?.size ?: 0,
