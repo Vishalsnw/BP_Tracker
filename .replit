@@ -22,9 +22,9 @@ args = "Android Project Info"
 name = "Android Project Info"
 author = "agent"
 
+[workflows.workflow.metadata]
+outputType = "console"
+
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "bash project_info.sh"
-
-[workflows.workflow.metadata]
-outputType = "console"
