@@ -14,7 +14,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -114,6 +113,9 @@ class ReminderViewModel @Inject constructor(
         val intent = Intent(context, ReminderReceiver::class.java).apply {
             putExtra("reminder_id", reminder.id)
             putExtra("reminder_label", reminder.label)
+            putExtra("reminder_hour", reminder.time.hour)
+            putExtra("reminder_minute", reminder.time.minute)
+            putExtra("reminder_days", reminder.daysOfWeek.map { it.value }.toIntArray())
         }
         
         val pendingIntent = PendingIntent.getBroadcast(
@@ -123,16 +125,30 @@ class ReminderViewModel @Inject constructor(
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
         
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            if (alarmManager.canScheduleExactAlarms()) {
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                if (alarmManager.canScheduleExactAlarms()) {
+                    alarmManager.setExactAndAllowWhileIdle(
+                        AlarmManager.RTC_WAKEUP,
+                        triggerTime,
+                        pendingIntent
+                    )
+                } else {
+                    alarmManager.setAndAllowWhileIdle(
+                        AlarmManager.RTC_WAKEUP,
+                        triggerTime,
+                        pendingIntent
+                    )
+                }
+            } else {
                 alarmManager.setExactAndAllowWhileIdle(
                     AlarmManager.RTC_WAKEUP,
                     triggerTime,
                     pendingIntent
                 )
             }
-        } else {
-            alarmManager.setExactAndAllowWhileIdle(
+        } catch (e: SecurityException) {
+            alarmManager.setAndAllowWhileIdle(
                 AlarmManager.RTC_WAKEUP,
                 triggerTime,
                 pendingIntent
