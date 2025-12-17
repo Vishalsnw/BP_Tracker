@@ -29,11 +29,3 @@ enum class MoodLevel(val label: String, val emoji: String) {
     GOOD("Good", "4"),
     VERY_GOOD("Very Good", "5")
 }
-
-enum class StressLevel(val label: String, val value: Int) {
-    VERY_LOW("Very Low", 1),
-    LOW("Low", 2),
-    MODERATE("Moderate", 3),
-    HIGH("High", 4),
-    VERY_HIGH("Very High", 5)
-}

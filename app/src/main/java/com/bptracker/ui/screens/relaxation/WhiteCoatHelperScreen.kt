@@ -258,7 +258,7 @@ private fun RelaxationContent(
         modifier = Modifier.fillMaxSize()
     ) {
         LinearProgressIndicator(
-            progress = { progress },
+            progress = progress,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(8.dp),

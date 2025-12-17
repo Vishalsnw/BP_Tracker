@@ -6,7 +6,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
@@ -350,7 +352,7 @@ private fun AddProfileDialog(
                     }
                 }
                 
-                HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+                Divider(modifier = Modifier.padding(vertical = 8.dp))
                 
                 Text(
                     text = "Emergency Contact",
@@ -426,5 +428,3 @@ private fun AddProfileDialog(
     )
 }
 
-@Composable
-private fun rememberScrollState() = androidx.compose.foundation.rememberScrollState()

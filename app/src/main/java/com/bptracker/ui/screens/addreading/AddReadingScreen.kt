@@ -426,6 +426,7 @@ fun AddReadingScreen(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun MoodButton(
     emoji: String,
