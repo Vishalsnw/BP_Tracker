@@ -33,7 +33,8 @@ object AppModule {
         )
             .addMigrations(
                 BloodPressureDatabase.MIGRATION_1_2,
-                BloodPressureDatabase.MIGRATION_2_3
+                BloodPressureDatabase.MIGRATION_2_3,
+                BloodPressureDatabase.MIGRATION_3_4
             )
             .fallbackToDestructiveMigration()
             .build()

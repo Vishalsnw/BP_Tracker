@@ -31,7 +31,7 @@ import com.bptracker.data.model.WeightEntry
         AlertSettings::class,
         InsightCard::class
     ],
-    version = 3,
+    version = 4,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
@@ -171,6 +171,20 @@ abstract class BloodPressureDatabase : RoomDatabase() {
                         actionType TEXT,
                         actionData TEXT
                     )
+                """)
+            }
+        }
+        
+        val MIGRATION_3_4 = object : Migration(3, 4) {
+            override fun migrate(database: SupportSQLiteDatabase) {
+                database.execSQL("""
+                    ALTER TABLE medications ADD COLUMN startDate INTEGER NOT NULL DEFAULT ${System.currentTimeMillis()}
+                """)
+                database.execSQL("""
+                    ALTER TABLE medications ADD COLUMN endDate INTEGER
+                """)
+                database.execSQL("""
+                    ALTER TABLE medications ADD COLUMN sideEffects TEXT NOT NULL DEFAULT ''
                 """)
             }
         }

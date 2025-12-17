@@ -248,6 +248,23 @@ private fun MedicationCard(
                     }
                 )
                 
+                AssistChip(
+                    onClick = { },
+                    label = { Text("Since ${medication.formattedStartDate}") },
+                    leadingIcon = {
+                        Icon(
+                            Icons.Filled.CalendarToday,
+                            contentDescription = null,
+                            modifier = Modifier.size(16.dp)
+                        )
+                    }
+                )
+            }
+            
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                modifier = Modifier.padding(top = 4.dp)
+            ) {
                 if (!medication.isActive) {
                     AssistChip(
                         onClick = onToggleActive,
@@ -275,8 +292,17 @@ private fun MedicationCard(
                 }
             }
             
-            if (medication.notes.isNotBlank()) {
+            if (medication.sideEffects.isNotBlank()) {
                 Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = "Side Effects: ${medication.sideEffects}",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.error.copy(alpha = 0.8f)
+                )
+            }
+            
+            if (medication.notes.isNotBlank()) {
+                Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = medication.notes,
                     style = MaterialTheme.typography.bodySmall,
@@ -298,6 +324,7 @@ private fun AddMedicationDialog(
     var dosage by remember { mutableStateOf(medication?.dosage ?: "") }
     var frequency by remember { mutableStateOf(medication?.frequency ?: MedicationFrequency.DAILY) }
     var notes by remember { mutableStateOf(medication?.notes ?: "") }
+    var sideEffects by remember { mutableStateOf(medication?.sideEffects ?: "") }
     var expandedFrequency by remember { mutableStateOf(false) }
     
     AlertDialog(
@@ -358,6 +385,14 @@ private fun AddMedicationDialog(
                 }
                 
                 OutlinedTextField(
+                    value = sideEffects,
+                    onValueChange = { sideEffects = it },
+                    label = { Text("Side Effects (optional)") },
+                    singleLine = true,
+                    modifier = Modifier.fillMaxWidth()
+                )
+                
+                OutlinedTextField(
                     value = notes,
                     onValueChange = { notes = it },
                     label = { Text("Notes (optional)") },
@@ -378,8 +413,11 @@ private fun AddMedicationDialog(
                                 dosage = dosage,
                                 frequency = frequency,
                                 notes = notes,
+                                sideEffects = sideEffects,
                                 isActive = medication?.isActive ?: true,
-                                userId = medication?.userId ?: 0
+                                userId = medication?.userId ?: 0,
+                                startDate = medication?.startDate ?: System.currentTimeMillis(),
+                                endDate = medication?.endDate
                             )
                         )
                     }
