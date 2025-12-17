@@ -114,6 +114,14 @@ Key dependencies are defined in `app/build.gradle.kts`:
   - New utilities: InsightGenerator (pattern analysis), AlertManager (notification handling)
   - Updated Settings screen with new Health Tracking and Goals & Insights sections
   - Updated Navigation to support all new screens
+- Additional Improvements (December 2025):
+  - Added Medication Effectiveness Analysis (MedicationEffectivenessAnalyzer utility)
+  - Enhanced PDF Reports with cover page, statistics summary, category distribution, trend analysis, and medication section
+  - Added Doctor Report Email Integration with pre-filled email and PDF attachment
+  - Added Measurement Quality Score system (MeasurementQualityScorer utility)
+  - Updated Medication model with startDate, endDate, and sideEffects fields
+  - Database upgraded to version 4 with new medication columns
+  - Updated MedicationScreen with start date display and side effects tracking
 
 ## User Preferences
 - User will build the app via GitHub Actions YAML workflow (to be created upon request)
