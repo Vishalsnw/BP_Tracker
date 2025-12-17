@@ -27,6 +27,7 @@ object AppModule {
             "blood_pressure_database"
         )
             .addMigrations(BloodPressureDatabase.MIGRATION_1_2)
+            .fallbackToDestructiveMigration()
             .build()
     }
     
