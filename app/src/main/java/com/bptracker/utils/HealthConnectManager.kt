@@ -17,6 +17,7 @@ import androidx.health.connect.client.units.Mass
 import androidx.health.connect.client.units.Pressure
 import com.bptracker.data.model.BloodPressureReading
 import com.bptracker.data.model.GlucoseEntry
+import com.bptracker.data.model.GlucoseType
 import com.bptracker.data.model.WeightEntry
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -155,17 +156,16 @@ class HealthConnectManager @Inject constructor(
         
         return try {
             val instant = entry.timestamp.atZone(ZoneId.systemDefault()).toInstant()
-            val relationToMealValue = when (entry.mealType) {
-                "FASTING" -> BloodGlucoseRecord.RELATION_TO_MEAL_FASTING
-                "BEFORE_MEAL" -> BloodGlucoseRecord.RELATION_TO_MEAL_BEFORE_MEAL
-                "AFTER_MEAL" -> BloodGlucoseRecord.RELATION_TO_MEAL_AFTER_MEAL
+            val relationToMealValue = when (entry.type) {
+                GlucoseType.FASTING -> BloodGlucoseRecord.RELATION_TO_MEAL_FASTING
+                GlucoseType.POST_MEAL -> BloodGlucoseRecord.RELATION_TO_MEAL_AFTER_MEAL
                 else -> BloodGlucoseRecord.RELATION_TO_MEAL_UNKNOWN
             }
             
             val record = BloodGlucoseRecord(
                 time = instant,
                 zoneOffset = ZoneOffset.systemDefault().rules.getOffset(instant),
-                level = BloodGlucose.milligramsPerDeciliter(entry.value.toDouble()),
+                level = BloodGlucose.milligramsPerDeciliter(entry.glucoseMgDl),
                 specimenSource = BloodGlucoseRecord.SPECIMEN_SOURCE_CAPILLARY_BLOOD,
                 relationToMeal = relationToMealValue
             )

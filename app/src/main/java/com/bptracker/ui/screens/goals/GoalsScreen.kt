@@ -195,7 +195,7 @@ private fun GoalCard(
             Spacer(modifier = Modifier.height(16.dp))
             
             LinearProgressIndicator(
-                progress = { progress.coerceIn(0f, 1f) },
+                progress = progress.coerceIn(0f, 1f),
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(8.dp),
@@ -271,7 +271,7 @@ private fun AchievementsSection(achievements: List<com.bptracker.data.model.Achi
                     )
                     Column {
                         Text(
-                            achievement.type.label,
+                            achievement.type.title,
                             style = MaterialTheme.typography.bodyMedium,
                             fontWeight = FontWeight.Medium
                         )

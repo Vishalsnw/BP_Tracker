@@ -49,8 +49,8 @@ class InsightsViewModel @Inject constructor(
             val lastWeekStart = weekStart.minusDays(7)
             val lastWeekEnd = weekStart.minusSeconds(1)
             
-            val thisWeekReadings = bpRepository.getReadingsInRange(weekStart, weekEnd)
-            val lastWeekReadings = bpRepository.getReadingsInRange(lastWeekStart, lastWeekEnd)
+            val thisWeekReadings = bpRepository.getReadingsInRange(weekStart, weekEnd).first()
+            val lastWeekReadings = bpRepository.getReadingsInRange(lastWeekStart, lastWeekEnd).first()
             
             val weeklySummary = if (thisWeekReadings.isNotEmpty()) {
                 insightGenerator.generateWeeklySummary(
