@@ -1,4 +1,4 @@
-modules = ["bash"]
+modules = ["bash", "java-graalvm22.3"]
 [agent]
 expertMode = true
 
@@ -27,4 +27,4 @@ outputType = "console"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "bash project_info.sh"
+args = "./project_info.sh"
