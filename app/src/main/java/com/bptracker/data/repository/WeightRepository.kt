@@ -18,6 +18,10 @@ class WeightRepository @Inject constructor(
     
     fun getAllWeightEntries(): Flow<List<WeightEntry>> = weightDao.getAllWeightEntries()
     
+    fun getAllEntries(): Flow<List<WeightEntry>> = getAllWeightEntries()
+    
+    suspend fun insertEntry(entry: WeightEntry): Long = insertWeight(entry)
+    
     fun getRecentWeightEntries(limit: Int = 10): Flow<List<WeightEntry>> = 
         weightDao.getRecentWeightEntries(limit)
     

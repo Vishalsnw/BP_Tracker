@@ -19,6 +19,10 @@ class GlucoseRepository @Inject constructor(
     
     fun getAllGlucoseEntries(): Flow<List<GlucoseEntry>> = glucoseDao.getAllGlucoseEntries()
     
+    fun getAllEntries(): Flow<List<GlucoseEntry>> = getAllGlucoseEntries()
+    
+    suspend fun insertEntry(entry: GlucoseEntry): Long = insertGlucose(entry)
+    
     fun getRecentGlucoseEntries(limit: Int = 10): Flow<List<GlucoseEntry>> = 
         glucoseDao.getRecentGlucoseEntries(limit)
     

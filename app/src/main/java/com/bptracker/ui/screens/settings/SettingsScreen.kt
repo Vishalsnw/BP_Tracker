@@ -27,6 +27,10 @@ fun SettingsScreen(
     onNavigateToGlucose: () -> Unit = {},
     onNavigateToGoals: () -> Unit = {},
     onNavigateToInsights: () -> Unit = {},
+    onNavigateToBluetooth: () -> Unit = {},
+    onNavigateToBackup: () -> Unit = {},
+    onNavigateToEmergency: () -> Unit = {},
+    onNavigateToHealthConnect: () -> Unit = {},
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -149,6 +153,36 @@ fun SettingsScreen(
                     title = "Insights & Analytics",
                     subtitle = "Personalized health insights based on your data",
                     onClick = onNavigateToInsights
+                )
+            }
+            
+            SettingsSection(title = "Devices & Sync") {
+                SettingsItem(
+                    icon = Icons.Filled.Bluetooth,
+                    title = "Bluetooth BP Monitor",
+                    subtitle = "Connect to compatible Bluetooth monitors",
+                    onClick = onNavigateToBluetooth
+                )
+                SettingsItem(
+                    icon = Icons.Filled.HealthAndSafety,
+                    title = "Health Connect",
+                    subtitle = "Sync with Android Health Connect",
+                    onClick = onNavigateToHealthConnect
+                )
+                SettingsItem(
+                    icon = Icons.Filled.Cloud,
+                    title = "Cloud Backup",
+                    subtitle = "Backup data to Google Drive",
+                    onClick = onNavigateToBackup
+                )
+            }
+            
+            SettingsSection(title = "Safety") {
+                SettingsItem(
+                    icon = Icons.Filled.Emergency,
+                    title = "Crisis Response",
+                    subtitle = "Set up emergency contacts and alerts",
+                    onClick = onNavigateToEmergency
                 )
             }
             

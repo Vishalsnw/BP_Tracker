@@ -34,6 +34,10 @@ import com.bptracker.ui.screens.settings.SettingsScreen
 import com.bptracker.ui.screens.statistics.StatisticsScreen
 import com.bptracker.ui.screens.voice.VoiceInputScreen
 import com.bptracker.ui.screens.weight.WeightScreen
+import com.bptracker.ui.screens.bluetooth.BluetoothScreen
+import com.bptracker.ui.screens.backup.BackupScreen
+import com.bptracker.ui.screens.emergency.EmergencyScreen
+import com.bptracker.ui.screens.healthconnect.HealthConnectScreen
 
 sealed class Screen(
     val route: String,
@@ -60,6 +64,10 @@ sealed class Screen(
     object Glucose : Screen("glucose", "Glucose", Icons.Filled.Bloodtype, Icons.Outlined.Bloodtype)
     object Goals : Screen("goals", "Goals", Icons.Filled.Flag, Icons.Outlined.Flag)
     object Insights : Screen("insights", "Insights", Icons.Filled.Insights, Icons.Outlined.Insights)
+    object Bluetooth : Screen("bluetooth", "Bluetooth", Icons.Filled.Bluetooth, Icons.Outlined.Bluetooth)
+    object Backup : Screen("backup", "Backup", Icons.Filled.Cloud, Icons.Outlined.Cloud)
+    object Emergency : Screen("emergency", "Emergency", Icons.Filled.Emergency, Icons.Outlined.Emergency)
+    object HealthConnect : Screen("health_connect", "Health Connect", Icons.Filled.HealthAndSafety, Icons.Outlined.HealthAndSafety)
 }
 
 val bottomNavItems = listOf(
@@ -150,7 +158,11 @@ fun AppNavigation() {
                     onNavigateToWeight = { navController.navigate(Screen.Weight.route) },
                     onNavigateToGlucose = { navController.navigate(Screen.Glucose.route) },
                     onNavigateToGoals = { navController.navigate(Screen.Goals.route) },
-                    onNavigateToInsights = { navController.navigate(Screen.Insights.route) }
+                    onNavigateToInsights = { navController.navigate(Screen.Insights.route) },
+                    onNavigateToBluetooth = { navController.navigate(Screen.Bluetooth.route) },
+                    onNavigateToBackup = { navController.navigate(Screen.Backup.route) },
+                    onNavigateToEmergency = { navController.navigate(Screen.Emergency.route) },
+                    onNavigateToHealthConnect = { navController.navigate(Screen.HealthConnect.route) }
                 )
             }
             
@@ -252,6 +264,34 @@ fun AppNavigation() {
             
             composable(Screen.Insights.route) {
                 InsightsScreen(
+                    onNavigateBack = { navController.popBackStack() }
+                )
+            }
+            
+            composable(Screen.Bluetooth.route) {
+                BluetoothScreen(
+                    onNavigateBack = { navController.popBackStack() },
+                    onReadingReceived = { systolic, diastolic, pulse ->
+                        navController.popBackStack()
+                        navController.navigate(Screen.AddReading.route)
+                    }
+                )
+            }
+            
+            composable(Screen.Backup.route) {
+                BackupScreen(
+                    onNavigateBack = { navController.popBackStack() }
+                )
+            }
+            
+            composable(Screen.Emergency.route) {
+                EmergencyScreen(
+                    onNavigateBack = { navController.popBackStack() }
+                )
+            }
+            
+            composable(Screen.HealthConnect.route) {
+                HealthConnectScreen(
                     onNavigateBack = { navController.popBackStack() }
                 )
             }

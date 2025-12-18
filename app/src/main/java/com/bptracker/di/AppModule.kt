@@ -12,6 +12,10 @@ import com.bptracker.data.database.MedicationDao
 import com.bptracker.data.database.ProfileDao
 import com.bptracker.data.database.ReminderDao
 import com.bptracker.data.database.WeightDao
+import com.bptracker.utils.BluetoothBPMonitor
+import com.bptracker.utils.CloudBackupManager
+import com.bptracker.utils.CrisisResponseManager
+import com.bptracker.utils.HealthConnectManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -92,5 +96,29 @@ object AppModule {
     @Singleton
     fun provideInsightDao(database: BloodPressureDatabase): InsightDao {
         return database.insightDao()
+    }
+    
+    @Provides
+    @Singleton
+    fun provideHealthConnectManager(@ApplicationContext context: Context): HealthConnectManager {
+        return HealthConnectManager(context)
+    }
+    
+    @Provides
+    @Singleton
+    fun provideBluetoothBPMonitor(@ApplicationContext context: Context): BluetoothBPMonitor {
+        return BluetoothBPMonitor(context)
+    }
+    
+    @Provides
+    @Singleton
+    fun provideCloudBackupManager(@ApplicationContext context: Context): CloudBackupManager {
+        return CloudBackupManager(context)
+    }
+    
+    @Provides
+    @Singleton
+    fun provideCrisisResponseManager(@ApplicationContext context: Context): CrisisResponseManager {
+        return CrisisResponseManager(context)
     }
 }

@@ -122,6 +122,14 @@ Key dependencies are defined in `app/build.gradle.kts`:
   - Updated Medication model with startDate, endDate, and sideEffects fields
   - Database upgraded to version 4 with new medication columns
   - Updated MedicationScreen with start date display and side effects tracking
+- Advanced Features Implementation (December 2025):
+  - Added Health Connect Integration (HealthConnectManager) - sync with Android Health Connect
+  - Added Bluetooth BP Monitor Support (BluetoothBPMonitor) - BLE GATT for compatible devices
+  - Added Cloud Backup to Google Drive (CloudBackupManager) - backup/restore via Google Sign-In
+  - Added Crisis Response System (CrisisResponseManager) - emergency contacts, SMS alerts, 911 dial
+  - New screens: HealthConnectScreen, BluetoothScreen, BackupScreen, EmergencyScreen
+  - Updated Settings with Devices & Sync and Safety sections
+  - Added new permissions: Bluetooth, Location, Internet, Call, SMS
 
 ## User Preferences
 - User will build the app via GitHub Actions YAML workflow (to be created upon request)

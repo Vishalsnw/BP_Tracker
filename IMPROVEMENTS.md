@@ -13,7 +13,7 @@ This document tracks all planned improvements based on competitive analysis of t
 - [x] Data Insights Cards - Pattern detection from existing data (COMPLETED)
 
 ### Phase 2: Core Features (Medium Effort)
-- [ ] Google Fit Integration - Sync BP readings with Google Fit
+- [x] Google Fit Integration - Sync BP readings with Health Connect (COMPLETED)
 - [x] Enhanced Goal Tracking - Set target BP range with progress tracking (COMPLETED)
 - [x] Smart Alerts System - Multiple alert types and customization (COMPLETED)
 - [x] Medication Effectiveness Analysis - Track BP changes with medications (COMPLETED)
@@ -21,8 +21,8 @@ This document tracks all planned improvements based on competitive analysis of t
 - [x] Doctor Report Email Integration - One-tap sharing via email (COMPLETED)
 
 ### Phase 3: Advanced Features (Higher Effort)
-- [ ] Bluetooth BP Monitor Sync - BLE support for OMRON, A&D, Beurer devices
-- [ ] Cloud Backup - Google account backup and restore
+- [x] Bluetooth BP Monitor Sync - BLE support for OMRON, A&D, Beurer devices (COMPLETED)
+- [x] Cloud Backup - Google account backup and restore (COMPLETED)
 - [x] Weight Tracking - Correlate weight with BP readings (COMPLETED)
 - [x] Blood Glucose Tracking - For diabetics with hypertension (COMPLETED)
 - [x] AI Health Insights - Personalized recommendations (COMPLETED)
@@ -33,8 +33,8 @@ This document tracks all planned improvements based on competitive analysis of t
 - [ ] OCR Reading Capture - Photo of BP monitor
 - [ ] Family Sharing/Caregiver Access
 - [ ] Multi-language Support
-- [ ] Google Drive Backup
-- [ ] Crisis Response - One-tap emergency call with BP data
+- [x] Google Drive Backup (COMPLETED - integrated with Cloud Backup)
+- [x] Crisis Response - One-tap emergency call with BP data (COMPLETED)
 
 ## Feature Details
 
@@ -71,12 +71,13 @@ This document tracks all planned improvements based on competitive analysis of t
 - Show on home screen
 - Refresh weekly
 
-### 6. Google Fit Integration
-- Sync BP readings to Google Fit
-- Use com.google.blood_pressure data type
-- Bidirectional sync option
-- OAuth2 authentication
-- Settings toggle to enable/disable
+### 6. Health Connect Integration (COMPLETED)
+- Sync BP readings to Android Health Connect (modern replacement for Google Fit)
+- Support for blood pressure, heart rate, weight, and glucose data types
+- Permission-based data sharing
+- Auto-sync option with toggle
+- Manual sync all readings feature
+- Implementation: HealthConnectManager utility class, HealthConnectScreen UI
 
 ### 7. Enhanced Goal Tracking
 - Set target systolic and diastolic ranges
@@ -119,20 +120,23 @@ This document tracks all planned improvements based on competitive analysis of t
 - Brief summary in email body
 - Option to save doctor's email
 
-### 12. Bluetooth BP Monitor Sync
+### 12. Bluetooth BP Monitor Sync (COMPLETED)
 - BLE GATT Blood Pressure Service (UUID: 1810)
 - Auto-scan for compatible devices
 - Supported manufacturers: OMRON, A&D, Beurer, QardioArm, Microlife
-- Background sync when app is open
-- Connection status indicator
+- Real-time connection status indicator
+- Automatic reading transfer to app
+- Signal strength display
+- Implementation: BluetoothBPMonitor utility class, BluetoothScreen UI
 
-### 13. Cloud Backup
-- Google account authentication
-- Encrypt data before upload
-- Automatic daily backup
-- Manual backup option
-- Restore on new device
-- Backup settings and preferences
+### 13. Cloud Backup (COMPLETED)
+- Google account authentication via Google Sign-In
+- Backup to Google Drive with encrypted JSON
+- Manual backup and restore options
+- Backup history with timestamps
+- Delete old backups
+- Restore data from any backup point
+- Implementation: CloudBackupManager utility class, BackupScreen UI
 
 ### 14. Weight Tracking
 - Add weight entry screen
@@ -163,6 +167,15 @@ This document tracks all planned improvements based on competitive analysis of t
 - Tips for improvement
 - Implementation: MeasurementQualityScorer utility class
 
+### 18. Crisis Response (COMPLETED)
+- Emergency contact management with primary contact designation
+- Automatic SMS alerts with BP reading details
+- One-tap emergency call (911)
+- Auto-dial 911 option for hypertensive crisis
+- Custom emergency message support
+- Test emergency dial functionality
+- Implementation: CrisisResponseManager utility class, EmergencyScreen UI
+
 ## Technical Notes
 
 ### Data Models to Add
@@ -176,28 +189,34 @@ This document tracks all planned improvements based on competitive analysis of t
 ### New Utility Classes Added
 - MedicationEffectivenessAnalyzer: Analyzes BP changes before/after medications
 - MeasurementQualityScorer: Scores measurement consistency and technique
+- HealthConnectManager: Android Health Connect integration for data sync
+- BluetoothBPMonitor: BLE GATT blood pressure monitor connectivity
+- CloudBackupManager: Google Drive backup and restore functionality
+- CrisisResponseManager: Emergency contact and crisis alert management
 
 ### Permissions Required
-- BLUETOOTH, BLUETOOTH_ADMIN (for BLE)
-- INTERNET (for Google Fit, cloud backup)
-- GET_ACCOUNTS (for Google account)
-- FOREGROUND_SERVICE (for background sync)
+- BLUETOOTH, BLUETOOTH_ADMIN, BLUETOOTH_SCAN, BLUETOOTH_CONNECT (for BLE)
+- ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION (for Bluetooth scanning)
+- INTERNET, ACCESS_NETWORK_STATE (for cloud backup and Health Connect)
+- CALL_PHONE, SEND_SMS (for crisis response)
 
 ### Third-party SDKs
-- Google Fit SDK
-- OMRON Connect SDK (optional)
+- Health Connect SDK (replacement for Google Fit)
+- Google Sign-In and Drive API (for cloud backup)
 - WorkManager for background tasks
 
 ## Competitive Advantages After Implementation
 
 1. Most comprehensive free BP tracker
-2. Google Fit integration (many apps lack this)
+2. Health Connect integration (modern Android health platform)
 3. Smart insights and pattern detection
 4. Multiple export formats (PDF + CSV)
 5. Medication effectiveness tracking
 6. Weight and glucose correlation
 7. Professional doctor reports
-8. Crisis emergency features
+8. Crisis emergency features with SMS and call support
+9. Bluetooth BP monitor connectivity (OMRON, A&D, Beurer, etc.)
+10. Cloud backup to Google Drive
 
 ## Notes
 - All features should maintain existing code style
