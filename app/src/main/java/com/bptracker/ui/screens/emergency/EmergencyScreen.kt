@@ -57,7 +57,7 @@ fun EmergencyScreen(
     if (showSmsPermissionDeniedDialog) {
         AlertDialog(
             onDismissRequest = { showSmsPermissionDeniedDialog = false },
-            icon = { Icon(Icons.Filled.SmsNotifications, contentDescription = null) },
+            icon = { Icon(Icons.Filled.Sms, contentDescription = null) },
             title = { Text("SMS Permission Required") },
             text = { 
                 Text("SMS permission is required to send emergency alerts to your contacts. Please enable it in Settings to use this feature.") 

@@ -1,0 +1,257 @@
+﻿2025-12-18T17:53:08.3270836Z Current runner version: '2.330.0'
+2025-12-18T17:53:08.3305640Z ##[group]Runner Image Provisioner
+2025-12-18T17:53:08.3307247Z Hosted Compute Agent
+2025-12-18T17:53:08.3308037Z Version: 20251211.462
+2025-12-18T17:53:08.3308693Z Commit: 6cbad8c2bb55d58165063d031ccabf57e2d2db61
+2025-12-18T17:53:08.3309453Z Build Date: 2025-12-11T16:28:49Z
+2025-12-18T17:53:08.3310070Z Worker ID: {aa02d98a-5653-4d98-9245-ebde5b824f6d}
+2025-12-18T17:53:08.3310777Z ##[endgroup]
+2025-12-18T17:53:08.3311311Z ##[group]Operating System
+2025-12-18T17:53:08.3311896Z Ubuntu
+2025-12-18T17:53:08.3312325Z 24.04.3
+2025-12-18T17:53:08.3312798Z LTS
+2025-12-18T17:53:08.3313221Z ##[endgroup]
+2025-12-18T17:53:08.3313732Z ##[group]Runner Image
+2025-12-18T17:53:08.3314314Z Image: ubuntu-24.04
+2025-12-18T17:53:08.3314797Z Version: 20251215.174.1
+2025-12-18T17:53:08.3315818Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20251215.174/images/ubuntu/Ubuntu2404-Readme.md
+2025-12-18T17:53:08.3317740Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20251215.174
+2025-12-18T17:53:08.3318765Z ##[endgroup]
+2025-12-18T17:53:08.3319892Z ##[group]GITHUB_TOKEN Permissions
+2025-12-18T17:53:08.3322210Z Contents: read
+2025-12-18T17:53:08.3322743Z Metadata: read
+2025-12-18T17:53:08.3323304Z Packages: read
+2025-12-18T17:53:08.3323793Z ##[endgroup]
+2025-12-18T17:53:08.3326023Z Secret source: Actions
+2025-12-18T17:53:08.3327584Z Prepare workflow directory
+2025-12-18T17:53:08.3680098Z Prepare all required actions
+2025-12-18T17:53:08.3736322Z Getting action download info
+2025-12-18T17:53:08.7569667Z Download action repository 'actions/checkout@v4' (SHA:34e114876b0b11c390a56381ad16ebd13914f8d5)
+2025-12-18T17:53:08.8963451Z Download action repository 'actions/setup-java@v4' (SHA:c1e323688fd81a25caa38c78aa6df2d33d3e20d9)
+2025-12-18T17:53:09.6757509Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2025-12-18T17:53:10.2252392Z Complete job name: build
+2025-12-18T17:53:10.3135476Z ##[group]Run actions/checkout@v4
+2025-12-18T17:53:10.3136955Z with:
+2025-12-18T17:53:10.3137725Z   repository: Vishalsnw/BP_Tracker
+2025-12-18T17:53:10.3139024Z   token: ***
+2025-12-18T17:53:10.3139774Z   ssh-strict: true
+2025-12-18T17:53:10.3140551Z   ssh-user: git
+2025-12-18T17:53:10.3141342Z   persist-credentials: true
+2025-12-18T17:53:10.3142226Z   clean: true
+2025-12-18T17:53:10.3143034Z   sparse-checkout-cone-mode: true
+2025-12-18T17:53:10.3143996Z   fetch-depth: 1
+2025-12-18T17:53:10.3144768Z   fetch-tags: false
+2025-12-18T17:53:10.3145574Z   show-progress: true
+2025-12-18T17:53:10.3146581Z   lfs: false
+2025-12-18T17:53:10.3147321Z   submodules: false
+2025-12-18T17:53:10.3148124Z   set-safe-directory: true
+2025-12-18T17:53:10.3149286Z ##[endgroup]
+2025-12-18T17:53:10.4350113Z Syncing repository: Vishalsnw/BP_Tracker
+2025-12-18T17:53:10.4354171Z ##[group]Getting Git version info
+2025-12-18T17:53:10.4355853Z Working directory is '/home/runner/work/BP_Tracker/BP_Tracker'
+2025-12-18T17:53:10.4358105Z [command]/usr/bin/git version
+2025-12-18T17:53:10.4424764Z git version 2.52.0
+2025-12-18T17:53:10.4454172Z ##[endgroup]
+2025-12-18T17:53:10.4472794Z Temporarily overriding HOME='/home/runner/work/_temp/8f6f2a15-a798-4695-ab4c-4e3528101b00' before making global git config changes
+2025-12-18T17:53:10.4480323Z Adding repository directory to the temporary git global config as a safe directory
+2025-12-18T17:53:10.4489891Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/BP_Tracker/BP_Tracker
+2025-12-18T17:53:10.4534570Z Deleting the contents of '/home/runner/work/BP_Tracker/BP_Tracker'
+2025-12-18T17:53:10.4539432Z ##[group]Initializing the repository
+2025-12-18T17:53:10.4544605Z [command]/usr/bin/git init /home/runner/work/BP_Tracker/BP_Tracker
+2025-12-18T17:53:10.4667145Z hint: Using 'master' as the name for the initial branch. This default branch name
+2025-12-18T17:53:10.4669523Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2025-12-18T17:53:10.4672445Z hint: to use in all of your new repositories, which will suppress this warning,
+2025-12-18T17:53:10.4674791Z hint: call:
+2025-12-18T17:53:10.4676002Z hint:
+2025-12-18T17:53:10.4677867Z hint: 	git config --global init.defaultBranch <name>
+2025-12-18T17:53:10.4679807Z hint:
+2025-12-18T17:53:10.4681534Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2025-12-18T17:53:10.4684525Z hint: 'development'. The just-created branch can be renamed via this command:
+2025-12-18T17:53:10.4687183Z hint:
+2025-12-18T17:53:10.4688412Z hint: 	git branch -m <name>
+2025-12-18T17:53:10.4689767Z hint:
+2025-12-18T17:53:10.4691591Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2025-12-18T17:53:10.4694220Z Initialized empty Git repository in /home/runner/work/BP_Tracker/BP_Tracker/.git/
+2025-12-18T17:53:10.4697700Z [command]/usr/bin/git remote add origin https://github.com/Vishalsnw/BP_Tracker
+2025-12-18T17:53:10.4725674Z ##[endgroup]
+2025-12-18T17:53:10.4728306Z ##[group]Disabling automatic garbage collection
+2025-12-18T17:53:10.4730499Z [command]/usr/bin/git config --local gc.auto 0
+2025-12-18T17:53:10.4762694Z ##[endgroup]
+2025-12-18T17:53:10.4764901Z ##[group]Setting up auth
+2025-12-18T17:53:10.4771199Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-12-18T17:53:10.4805554Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-12-18T17:53:10.5180837Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-12-18T17:53:10.5211102Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-12-18T17:53:10.5461029Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2025-12-18T17:53:10.5492732Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2025-12-18T17:53:10.5730318Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2025-12-18T17:53:10.5768805Z ##[endgroup]
+2025-12-18T17:53:10.5770187Z ##[group]Fetching the repository
+2025-12-18T17:53:10.5778133Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +6bc33ec14cb6a96bb61ce66e19a0d4a25d49ab36:refs/remotes/origin/main
+2025-12-18T17:53:11.0536903Z From https://github.com/Vishalsnw/BP_Tracker
+2025-12-18T17:53:11.0538901Z  * [new ref]         6bc33ec14cb6a96bb61ce66e19a0d4a25d49ab36 -> origin/main
+2025-12-18T17:53:11.0573763Z ##[endgroup]
+2025-12-18T17:53:11.0575921Z ##[group]Determining the checkout info
+2025-12-18T17:53:11.0578583Z ##[endgroup]
+2025-12-18T17:53:11.0581712Z [command]/usr/bin/git sparse-checkout disable
+2025-12-18T17:53:11.0629124Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2025-12-18T17:53:11.0660740Z ##[group]Checking out the ref
+2025-12-18T17:53:11.0663354Z [command]/usr/bin/git checkout --progress --force -B main refs/remotes/origin/main
+2025-12-18T17:53:11.0864241Z Switched to a new branch 'main'
+2025-12-18T17:53:11.0865874Z branch 'main' set up to track 'origin/main'.
+2025-12-18T17:53:11.0874953Z ##[endgroup]
+2025-12-18T17:53:11.0912060Z [command]/usr/bin/git log -1 --format=%H
+2025-12-18T17:53:11.0935720Z 6bc33ec14cb6a96bb61ce66e19a0d4a25d49ab36
+2025-12-18T17:53:11.1256880Z ##[group]Run actions/setup-java@v4
+2025-12-18T17:53:11.1257823Z with:
+2025-12-18T17:53:11.1258487Z   java-version: 17
+2025-12-18T17:53:11.1259224Z   distribution: temurin
+2025-12-18T17:53:11.1259995Z   cache: gradle
+2025-12-18T17:53:11.1260697Z   java-package: jdk
+2025-12-18T17:53:11.1261448Z   check-latest: false
+2025-12-18T17:53:11.1262209Z   server-id: github
+2025-12-18T17:53:11.1262965Z   server-username: GITHUB_ACTOR
+2025-12-18T17:53:11.1264082Z   server-password: GITHUB_TOKEN
+2025-12-18T17:53:11.1264972Z   overwrite-settings: true
+2025-12-18T17:53:11.1265799Z   job-status: success
+2025-12-18T17:53:11.1266954Z   token: ***
+2025-12-18T17:53:11.1267635Z ##[endgroup]
+2025-12-18T17:53:11.3443135Z ##[group]Installed distributions
+2025-12-18T17:53:11.3520544Z Resolved Java 17.0.17+10 from tool-cache
+2025-12-18T17:53:11.3521580Z Setting Java 17.0.17+10 as the default
+2025-12-18T17:53:11.3536884Z Creating toolchains.xml for JDK version 17 from temurin
+2025-12-18T17:53:11.3619671Z Writing to /home/runner/.m2/toolchains.xml
+2025-12-18T17:53:11.3620310Z 
+2025-12-18T17:53:11.3620805Z Java configuration:
+2025-12-18T17:53:11.3621293Z   Distribution: temurin
+2025-12-18T17:53:11.3625890Z   Version: 17.0.17+10
+2025-12-18T17:53:11.3627838Z   Path: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.17-10/x64
+2025-12-18T17:53:11.3629586Z 
+2025-12-18T17:53:11.3630283Z ##[endgroup]
+2025-12-18T17:53:11.3646893Z Creating settings.xml with server-id: github
+2025-12-18T17:53:11.3651817Z Writing to /home/runner/.m2/settings.xml
+2025-12-18T17:53:11.6247009Z Cache hit for: setup-java-Linux-x64-gradle-8d4a9881b58d1fc212375cf3e540df0ad96dd0adaecb64b546b623d36e585525
+2025-12-18T17:53:12.8603554Z Received 134217728 of 766820618 (17.5%), 118.1 MBs/sec
+2025-12-18T17:53:13.8613211Z Received 335544320 of 766820618 (43.8%), 153.4 MBs/sec
+2025-12-18T17:53:14.8621105Z Received 532676608 of 766820618 (69.5%), 164.6 MBs/sec
+2025-12-18T17:53:15.8657400Z Received 687865856 of 766820618 (89.7%), 160.5 MBs/sec
+2025-12-18T17:53:16.2845572Z Received 766820618 of 766820618 (100.0%), 162.2 MBs/sec
+2025-12-18T17:53:16.2853200Z Cache Size: ~731 MB (766820618 B)
+2025-12-18T17:53:16.3011512Z [command]/usr/bin/tar -xf /home/runner/work/_temp/dee8cb88-4691-4ef2-bf08-c64d54615ed4/cache.tzst -P -C /home/runner/work/BP_Tracker/BP_Tracker --use-compress-program unzstd
+2025-12-18T17:53:20.2997143Z Cache restored successfully
+2025-12-18T17:53:20.4388930Z Cache restored from key: setup-java-Linux-x64-gradle-8d4a9881b58d1fc212375cf3e540df0ad96dd0adaecb64b546b623d36e585525
+2025-12-18T17:53:20.4557432Z ##[group]Run chmod +x gradlew
+2025-12-18T17:53:20.4557795Z [36;1mchmod +x gradlew[0m
+2025-12-18T17:53:20.4595105Z shell: /usr/bin/bash -e {0}
+2025-12-18T17:53:20.4595378Z env:
+2025-12-18T17:53:20.4595671Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.17-10/x64
+2025-12-18T17:53:20.4596146Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.17-10/x64
+2025-12-18T17:53:20.4596805Z ##[endgroup]
+2025-12-18T17:53:20.4741251Z ##[group]Run echo "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" | base64 -d > app/release-keystore.jks
+2025-12-18T17:53:20.4778334Z [36;1mecho "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" | base64 -d > app/release-keystore.jks[0m
+2025-12-18T17:53:20.4829395Z shell: /usr/bin/bash -e {0}
+2025-12-18T17:53:20.4829644Z env:
+2025-12-18T17:53:20.4829947Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.17-10/x64
+2025-12-18T17:53:20.4830433Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.17-10/x64
+2025-12-18T17:53:20.4830790Z ##[endgroup]
+2025-12-18T17:53:20.5207777Z ##[group]Run ./gradlew assembleRelease
+2025-12-18T17:53:20.5208119Z [36;1m./gradlew assembleRelease[0m
+2025-12-18T17:53:20.5240492Z shell: /usr/bin/bash -e {0}
+2025-12-18T17:53:20.5240725Z env:
+2025-12-18T17:53:20.5241018Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.17-10/x64
+2025-12-18T17:53:20.5241476Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.17-10/x64
+2025-12-18T17:53:20.5241854Z ##[endgroup]
+2025-12-18T17:53:22.6593542Z 
+2025-12-18T17:53:22.6594678Z Welcome to Gradle 8.2!
+2025-12-18T17:53:22.6594985Z 
+2025-12-18T17:53:22.6596501Z Here are the highlights of this release:
+2025-12-18T17:53:22.6598918Z  - Kotlin DSL: new reference documentation, assignment syntax by default
+2025-12-18T17:53:22.6600060Z  - Kotlin DSL is now the default with Gradle init
+2025-12-18T17:53:22.6605435Z  - Improved suggestions to resolve errors in console output
+2025-12-18T17:53:22.6605960Z 
+2025-12-18T17:53:22.6606524Z For more details see https://docs.gradle.org/8.2/release-notes.html
+2025-12-18T17:53:22.6606847Z 
+2025-12-18T17:53:23.0530940Z Starting a Gradle Daemon (subsequent builds will be faster)
+2025-12-18T17:53:33.6600130Z > Task :app:buildKotlinToolingMetadata
+2025-12-18T17:53:33.6601229Z > Task :app:checkKotlinGradlePluginConfigurationErrors
+2025-12-18T17:53:33.6602219Z > Task :app:preBuild UP-TO-DATE
+2025-12-18T17:53:33.6602929Z > Task :app:preReleaseBuild UP-TO-DATE
+2025-12-18T17:53:34.2538802Z > Task :app:generateReleaseResValues
+2025-12-18T17:53:34.2560943Z > Task :app:checkReleaseAarMetadata
+2025-12-18T17:53:34.3533096Z > Task :app:mapReleaseSourceSetPaths
+2025-12-18T17:53:34.3535718Z > Task :app:generateReleaseResources
+2025-12-18T17:53:35.7530718Z > Task :app:packageReleaseResources
+2025-12-18T17:53:37.0530628Z > Task :app:mergeReleaseResources
+2025-12-18T17:53:37.8567530Z > Task :app:createReleaseCompatibleScreenManifests
+2025-12-18T17:53:37.8571958Z > Task :app:extractDeepLinksRelease
+2025-12-18T17:53:37.9549823Z > Task :app:parseReleaseLocalResources
+2025-12-18T17:53:38.2530340Z > Task :app:processReleaseMainManifest
+2025-12-18T17:53:38.3529910Z > Task :app:processReleaseManifest
+2025-12-18T17:53:38.3530491Z > Task :app:extractProguardFiles
+2025-12-18T17:53:38.3531200Z > Task :app:javaPreCompileRelease
+2025-12-18T17:53:38.4530108Z > Task :app:mergeReleaseJniLibFolders
+2025-12-18T17:53:38.5530799Z > Task :app:mergeReleaseNativeLibs NO-SOURCE
+2025-12-18T17:53:38.5532688Z > Task :app:stripReleaseDebugSymbols NO-SOURCE
+2025-12-18T17:53:38.5533308Z > Task :app:extractReleaseNativeSymbolTables NO-SOURCE
+2025-12-18T17:53:38.5548960Z > Task :app:mergeReleaseNativeDebugMetadata NO-SOURCE
+2025-12-18T17:53:38.7530505Z > Task :app:checkReleaseDuplicateClasses
+2025-12-18T17:53:38.7531224Z > Task :app:mergeReleaseArtProfile
+2025-12-18T17:53:38.7531810Z > Task :app:mergeReleaseShaders
+2025-12-18T17:53:38.7532512Z > Task :app:compileReleaseShaders NO-SOURCE
+2025-12-18T17:53:38.7533700Z > Task :app:generateReleaseAssets UP-TO-DATE
+2025-12-18T17:53:38.8530722Z > Task :app:mergeReleaseAssets
+2025-12-18T17:53:38.8531430Z > Task :app:compressReleaseAssets
+2025-12-18T17:53:39.0530873Z > Task :app:collectReleaseDependencies
+2025-12-18T17:53:39.2544606Z > Task :app:sdkReleaseDependencyData
+2025-12-18T17:53:39.2546153Z > Task :app:validateSigningRelease
+2025-12-18T17:53:39.2547981Z > Task :app:writeReleaseAppMetadata
+2025-12-18T17:53:39.2548478Z > Task :app:writeReleaseSigningConfigVersions
+2025-12-18T17:53:39.2549007Z > Task :app:processReleaseManifestForPackage
+2025-12-18T17:53:39.8529945Z > Task :app:processReleaseResources
+2025-12-18T17:53:41.4530767Z > Task :app:optimizeReleaseResources
+2025-12-18T17:53:52.5551283Z > Task :app:kspReleaseKotlin
+2025-12-18T17:54:18.7533280Z 
+2025-12-18T17:54:18.7574361Z e: file:///home/runner/work/BP_Tracker/BP_Tracker/app/src/main/java/com/bptracker/ui/screens/emergency/EmergencyScreen.kt:60:40 Unresolved reference: SmsNotifications
+2025-12-18T17:54:18.7586753Z > Task :app:compileReleaseKotlin FAILED
+2025-12-18T17:54:18.8552037Z 
+2025-12-18T17:54:18.8558155Z FAILURE: Build failed with an exception.
+2025-12-18T17:54:18.8558801Z 
+2025-12-18T17:54:18.8559247Z * What went wrong:
+2025-12-18T17:54:18.8559826Z Execution failed for task ':app:compileReleaseKotlin'.
+2025-12-18T17:54:18.8561235Z > A failure occurred while executing org.jetbrains.kotlin.compilerRunner.GradleCompilerRunnerWithWorkers$GradleKotlinCompilerWorkAction
+2025-12-18T17:54:18.8562536Z    > Compilation error. See log for more details
+2025-12-18T17:54:18.8566575Z 
+2025-12-18T17:54:18.8566773Z 30 actionable tasks: 30 executed
+2025-12-18T17:54:18.8567659Z * Try:
+2025-12-18T17:54:18.8592389Z > Run with --stacktrace option to get the stack trace.
+2025-12-18T17:54:18.8594151Z > Run with --info or --debug option to get more log output.
+2025-12-18T17:54:18.8594660Z > Run with --scan to get full insights.
+2025-12-18T17:54:18.8595165Z > Get more help at https://help.gradle.org.
+2025-12-18T17:54:18.8595481Z 
+2025-12-18T17:54:18.8595621Z BUILD FAILED in 57s
+2025-12-18T17:54:19.3409343Z ##[error]Process completed with exit code 1.
+2025-12-18T17:54:19.3465169Z ##[group]Run rm -f app/release-keystore.jks
+2025-12-18T17:54:19.3465540Z [36;1mrm -f app/release-keystore.jks[0m
+2025-12-18T17:54:19.3497357Z shell: /usr/bin/bash -e {0}
+2025-12-18T17:54:19.3497585Z env:
+2025-12-18T17:54:19.3497862Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.17-10/x64
+2025-12-18T17:54:19.3498335Z   JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.17-10/x64
+2025-12-18T17:54:19.3498670Z ##[endgroup]
+2025-12-18T17:54:19.3646692Z Post job cleanup.
+2025-12-18T17:54:19.5469639Z Post job cleanup.
+2025-12-18T17:54:19.6458543Z [command]/usr/bin/git version
+2025-12-18T17:54:19.6501185Z git version 2.52.0
+2025-12-18T17:54:19.6548643Z Temporarily overriding HOME='/home/runner/work/_temp/d9cfa3c8-473b-4c98-a7fd-5cea8e75ef73' before making global git config changes
+2025-12-18T17:54:19.6550239Z Adding repository directory to the temporary git global config as a safe directory
+2025-12-18T17:54:19.6564358Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/BP_Tracker/BP_Tracker
+2025-12-18T17:54:19.6605451Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-12-18T17:54:19.6643368Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-12-18T17:54:19.6894385Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-12-18T17:54:19.6923672Z http.https://github.com/.extraheader
+2025-12-18T17:54:19.6938958Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2025-12-18T17:54:19.6972865Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-12-18T17:54:19.7207496Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2025-12-18T17:54:19.7242715Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2025-12-18T17:54:19.7585068Z Cleaning up orphan processes
+2025-12-18T17:54:19.7878803Z Terminate orphan process: pid (2182) (java)
+2025-12-18T17:54:19.7908465Z Terminate orphan process: pid (2315) (java)
