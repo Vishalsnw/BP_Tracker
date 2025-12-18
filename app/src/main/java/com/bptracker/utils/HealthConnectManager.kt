@@ -155,23 +155,19 @@ class HealthConnectManager @Inject constructor(
         
         return try {
             val instant = entry.timestamp.atZone(ZoneId.systemDefault()).toInstant()
+            val relationToMealValue = when (entry.mealType) {
+                "FASTING" -> BloodGlucoseRecord.RELATION_TO_MEAL_FASTING
+                "BEFORE_MEAL" -> BloodGlucoseRecord.RELATION_TO_MEAL_BEFORE_MEAL
+                "AFTER_MEAL" -> BloodGlucoseRecord.RELATION_TO_MEAL_AFTER_MEAL
+                else -> BloodGlucoseRecord.RELATION_TO_MEAL_UNKNOWN
+            }
+            
             val record = BloodGlucoseRecord(
                 time = instant,
                 zoneOffset = ZoneOffset.systemDefault().rules.getOffset(instant),
-                level = BloodGlucose.milligramsPerDeciliter(entry.glucoseLevel.toDouble()),
+                level = BloodGlucose.milligramsPerDeciliter(entry.value.toDouble()),
                 specimenSource = BloodGlucoseRecord.SPECIMEN_SOURCE_CAPILLARY_BLOOD,
-                mealType = when (entry.mealType) {
-                    "FASTING" -> BloodGlucoseRecord.RELATION_TO_MEAL_FASTING
-                    "BEFORE_MEAL" -> BloodGlucoseRecord.RELATION_TO_MEAL_BEFORE_MEAL
-                    "AFTER_MEAL" -> BloodGlucoseRecord.RELATION_TO_MEAL_AFTER_MEAL
-                    else -> BloodGlucoseRecord.RELATION_TO_MEAL_UNKNOWN
-                },
-                relationToMeal = when (entry.mealType) {
-                    "FASTING" -> BloodGlucoseRecord.RELATION_TO_MEAL_FASTING
-                    "BEFORE_MEAL" -> BloodGlucoseRecord.RELATION_TO_MEAL_BEFORE_MEAL
-                    "AFTER_MEAL" -> BloodGlucoseRecord.RELATION_TO_MEAL_AFTER_MEAL
-                    else -> BloodGlucoseRecord.RELATION_TO_MEAL_UNKNOWN
-                }
+                relationToMeal = relationToMealValue
             )
             
             client.insertRecords(listOf(record))

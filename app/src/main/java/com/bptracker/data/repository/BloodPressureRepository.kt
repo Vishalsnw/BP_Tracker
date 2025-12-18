@@ -43,17 +43,11 @@ class BloodPressureRepository @Inject constructor(
     
     suspend fun getTotalReadingCount(): Int = bloodPressureDao.getTotalReadingCount()
     
-    suspend fun getRecentReadings(limit: Int): List<BloodPressureReading> =
-        bloodPressureDao.getRecentReadingsSync(limit)
-    
     suspend fun getTodayReadings(): List<BloodPressureReading> {
         val startOfDay = LocalDateTime.now().toLocalDate().atStartOfDay()
         val endOfDay = startOfDay.plusDays(1)
         return bloodPressureDao.getReadingsInRangeSync(startOfDay.toDbString(), endOfDay.toDbString())
     }
-    
-    suspend fun getReadingsInRange(startDate: LocalDateTime, endDate: LocalDateTime): List<BloodPressureReading> =
-        bloodPressureDao.getReadingsInRangeSync(startDate.toDbString(), endDate.toDbString())
     
     suspend fun getStatistics(startDate: LocalDateTime): Statistics {
         val startDateStr = startDate.toDbString()

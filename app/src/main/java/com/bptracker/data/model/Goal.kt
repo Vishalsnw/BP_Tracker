@@ -27,10 +27,10 @@ data class Goal(
 }
 
 enum class GoalType(val label: String, val description: String) {
-    BP_TARGET("Blood Pressure Target", "Keep your BP within a healthy range"),
-    DAILY_TRACKING("Daily Tracking", "Take readings every day"),
-    WEIGHT_LOSS("Weight Loss", "Reach your target weight"),
-    CONSISTENCY("Consistency Streak", "Build a measurement habit")
+    BLOOD_PRESSURE_TARGET("Blood Pressure Target", "Keep your BP within a healthy range"),
+    DAILY_READINGS("Daily Tracking", "Take readings every day"),
+    WEIGHT_TARGET("Weight Loss", "Reach your target weight"),
+    CONSISTENCY_STREAK("Consistency Streak", "Build a measurement habit")
 }
 
 @Entity(tableName = "achievements")

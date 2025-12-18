@@ -63,7 +63,7 @@ class GoalsViewModel @Inject constructor(
         return goals.associate { goal ->
             val progress = when (goal.type) {
                 GoalType.BLOOD_PRESSURE_TARGET -> {
-                    val readings = bpRepository.getRecentReadings(30)
+                    val readings = bpRepository.getTodayReadings()
                     if (readings.isEmpty()) 0f
                     else {
                         val normalCount = readings.count { 

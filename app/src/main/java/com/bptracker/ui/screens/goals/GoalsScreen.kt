@@ -176,7 +176,7 @@ private fun GoalCard(
                             fontWeight = FontWeight.Bold
                         )
                         Text(
-                            goal.description,
+                            goal.type.description,
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
