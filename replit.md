@@ -39,3 +39,10 @@ A comprehensive Android/Kotlin blood pressure tracking application with advanced
 ✅ All dependencies configured in build.gradle.kts
 ✅ Project structure verified
 ✅ Ready for development/deployment
+
+## Recent Changes (December 2025)
+- Fixed Bluetooth permission flow with proper ActivityResult launcher - auto-starts scan after grant
+- Improved Google Sign-In error handling with ApiException status code mapping
+- Added SMS permission request for Crisis Response with graceful denial handling
+- Fixed HorizontalDivider → Divider for Material3 compatibility (8 instances)
+- Resolved META-INF/DEPENDENCIES resource merge conflict in build.gradle.kts
