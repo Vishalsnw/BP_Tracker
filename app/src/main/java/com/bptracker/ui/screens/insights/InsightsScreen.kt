@@ -298,7 +298,7 @@ private fun TimeOfDayCard(stats: List<com.bptracker.data.model.TimeOfDayStats>) 
                 }
                 
                 if (stat != stats.last()) {
-                    HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp))
+                    Divider(modifier = Modifier.padding(vertical = 4.dp))
                 }
             }
         }

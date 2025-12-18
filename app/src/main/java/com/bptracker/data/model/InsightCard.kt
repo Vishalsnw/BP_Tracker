@@ -72,8 +72,8 @@ data class WeeklySummary(
     val diastolicChange: Double
 )
 
-enum class TrendDirection {
-    IMPROVING,
-    STABLE,
-    WORSENING
+enum class TrendDirection(val label: String) {
+    IMPROVING("Improving"),
+    STABLE("Stable"),
+    WORSENING("Worsening")
 }

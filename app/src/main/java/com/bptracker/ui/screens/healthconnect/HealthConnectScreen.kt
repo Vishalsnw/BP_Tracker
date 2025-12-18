@@ -115,7 +115,7 @@ fun HealthConnectScreen(
             }
             
             item {
-                HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp))
+                Divider(modifier = Modifier.padding(vertical = 8.dp))
             }
             
             item {
