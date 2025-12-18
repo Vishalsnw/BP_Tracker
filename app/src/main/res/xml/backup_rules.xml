@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <full-backup-content>
-    <exclude domain="cache" path="." />
-    <exclude domain="cache" path="*" />
-    <exclude domain="code_cache" path="." />
-    <exclude domain="code_cache" path="*" />
-    <exclude domain="files" path="shared_prefs" />
+    <exclude domain="database" path="room_master_table.db-wal" />
+    <exclude domain="database" path="room_master_table.db-shm" />
+    <exclude domain="sharedpref" path="androidx.preference_preferences.xml" />
 </full-backup-content>
