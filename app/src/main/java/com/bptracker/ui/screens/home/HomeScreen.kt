@@ -16,6 +16,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -40,53 +41,80 @@ fun HomeScreen(
     
     Scaffold(
         topBar = {
-            LargeTopAppBar(
+            TopAppBar(
                 title = {
-                    Column {
-                        Text(
-                            "Blood Pressure",
-                            style = MaterialTheme.typography.headlineMedium,
-                            fontWeight = FontWeight.Bold
-                        )
-                        Text(
-                            "Track your heart health",
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .size(44.dp)
+                                .clip(RoundedCornerShape(14.dp))
+                                .background(
+                                    brush = Brush.linearGradient(
+                                        colors = listOf(
+                                            GradientHealthStart,
+                                            GradientHealthEnd
+                                        )
+                                    )
+                                ),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                imageVector = Icons.Filled.MonitorHeart,
+                                contentDescription = null,
+                                tint = Color.White,
+                                modifier = Modifier.size(26.dp)
+                            )
+                        }
+                        Column {
+                            Text(
+                                "BP Tracker",
+                                style = MaterialTheme.typography.titleLarge,
+                                fontWeight = FontWeight.Bold,
+                                color = MaterialTheme.colorScheme.onBackground
+                            )
+                            Text(
+                                "Monitor your heart health",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        }
                     }
                 },
-                colors = TopAppBarDefaults.largeTopAppBarColors(
+                colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.background,
                     scrolledContainerColor = MaterialTheme.colorScheme.surface
                 )
             )
         },
         floatingActionButton = {
-            ExtendedFloatingActionButton(
+            FloatingActionButton(
                 onClick = onAddReading,
-                icon = { 
-                    Icon(
-                        Icons.Filled.Add, 
-                        contentDescription = null,
-                        modifier = Modifier.size(24.dp)
-                    ) 
-                },
-                text = { 
-                    Text(
-                        "Add Reading",
-                        fontWeight = FontWeight.SemiBold
-                    ) 
-                },
                 containerColor = MaterialTheme.colorScheme.primary,
-                contentColor = MaterialTheme.colorScheme.onPrimary
-            )
+                contentColor = MaterialTheme.colorScheme.onPrimary,
+                shape = RoundedCornerShape(16.dp),
+                modifier = Modifier.shadow(
+                    elevation = 8.dp,
+                    shape = RoundedCornerShape(16.dp),
+                    ambientColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f),
+                    spotColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.3f)
+                )
+            ) {
+                Icon(
+                    Icons.Filled.Add,
+                    contentDescription = "Add Reading",
+                    modifier = Modifier.size(28.dp)
+                )
+            }
         }
     ) { padding ->
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding),
-            contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
+            contentPadding = PaddingValues(horizontal = 20.dp, vertical = 12.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             item {
@@ -113,8 +141,9 @@ fun HomeScreen(
                     ) {
                         Text(
                             text = "Recent Readings",
-                            style = MaterialTheme.typography.titleLarge,
-                            fontWeight = FontWeight.Bold
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.onBackground
                         )
                         TextButton(
                             onClick = onViewHistory,
@@ -130,7 +159,7 @@ fun HomeScreen(
                             Icon(
                                 Icons.Filled.ArrowForward,
                                 contentDescription = null,
-                                modifier = Modifier.size(18.dp)
+                                modifier = Modifier.size(16.dp)
                             )
                         }
                     }
@@ -166,12 +195,16 @@ private fun HeroCard(
     lastReading: com.bptracker.data.model.BloodPressureReading?
 ) {
     Card(
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(24.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primary
-        )
+        modifier = Modifier
+            .fillMaxWidth()
+            .shadow(
+                elevation = 16.dp,
+                shape = RoundedCornerShape(28.dp),
+                ambientColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.15f),
+                spotColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f)
+            ),
+        shape = RoundedCornerShape(28.dp),
+        colors = CardDefaults.cardColors(containerColor = Color.Transparent)
     ) {
         Box(
             modifier = Modifier
@@ -179,43 +212,64 @@ private fun HeroCard(
                 .background(
                     brush = Brush.linearGradient(
                         colors = listOf(
-                            MaterialTheme.colorScheme.primary,
-                            MaterialTheme.colorScheme.primary.copy(alpha = 0.85f)
+                            GradientHealthStart,
+                            GradientHealthMiddle,
+                            GradientHealthEnd
                         )
                     )
                 )
         ) {
             Box(
                 modifier = Modifier
-                    .size(120.dp)
-                    .offset(x = (-20).dp, y = (-20).dp)
+                    .size(180.dp)
+                    .offset(x = (-40).dp, y = (-40).dp)
                     .clip(CircleShape)
                     .background(Color.White.copy(alpha = 0.08f))
             )
             Box(
                 modifier = Modifier
-                    .size(80.dp)
-                    .align(Alignment.TopEnd)
-                    .offset(x = 20.dp, y = 40.dp)
+                    .size(100.dp)
+                    .align(Alignment.BottomEnd)
+                    .offset(x = 30.dp, y = 30.dp)
                     .clip(CircleShape)
                     .background(Color.White.copy(alpha = 0.06f))
             )
+            Box(
+                modifier = Modifier
+                    .size(60.dp)
+                    .align(Alignment.TopEnd)
+                    .offset(x = (-20).dp, y = 60.dp)
+                    .clip(CircleShape)
+                    .background(Color.White.copy(alpha = 0.05f))
+            )
             
             Column(
-                modifier = Modifier.padding(24.dp)
+                modifier = Modifier.padding(28.dp)
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.Top
                 ) {
-                    Column {
-                        Text(
-                            text = "Last Reading",
-                            style = MaterialTheme.typography.labelLarge,
-                            color = Color.White.copy(alpha = 0.8f)
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
+                    Column(modifier = Modifier.weight(1f)) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Filled.Favorite,
+                                contentDescription = null,
+                                tint = Color.White.copy(alpha = 0.9f),
+                                modifier = Modifier.size(18.dp)
+                            )
+                            Text(
+                                text = "Latest Reading",
+                                style = MaterialTheme.typography.labelLarge,
+                                color = Color.White.copy(alpha = 0.9f),
+                                fontWeight = FontWeight.Medium
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(16.dp))
                         if (lastReading != null) {
                             Row(
                                 verticalAlignment = Alignment.Bottom
@@ -231,8 +285,8 @@ private fun HeroCard(
                                 Text(
                                     text = "/",
                                     style = MaterialTheme.typography.displaySmall,
-                                    color = Color.White.copy(alpha = 0.7f),
-                                    modifier = Modifier.padding(horizontal = 4.dp)
+                                    color = Color.White.copy(alpha = 0.6f),
+                                    modifier = Modifier.padding(horizontal = 4.dp, bottom = 4.dp)
                                 )
                                 Text(
                                     text = "${lastReading.diastolic}",
@@ -242,75 +296,90 @@ private fun HeroCard(
                                     ),
                                     color = Color.White
                                 )
+                                Text(
+                                    text = " mmHg",
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = Color.White.copy(alpha = 0.7f),
+                                    modifier = Modifier.padding(start = 4.dp, bottom = 8.dp)
+                                )
                             }
                             
-                            Spacer(modifier = Modifier.height(4.dp))
+                            Spacer(modifier = Modifier.height(12.dp))
+                            
+                            Surface(
+                                color = getCategoryColor(lastReading.category),
+                                shape = RoundedCornerShape(10.dp)
+                            ) {
+                                Text(
+                                    text = lastReading.category.label,
+                                    style = MaterialTheme.typography.labelMedium,
+                                    color = Color.White,
+                                    fontWeight = FontWeight.SemiBold,
+                                    modifier = Modifier.padding(horizontal = 14.dp, vertical = 6.dp)
+                                )
+                            }
+                            
+                            Spacer(modifier = Modifier.height(12.dp))
                             
                             Row(
                                 verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                                horizontalArrangement = Arrangement.spacedBy(6.dp)
                             ) {
-                                Surface(
-                                    color = getCategoryColor(lastReading.category).copy(alpha = 0.9f),
-                                    shape = RoundedCornerShape(8.dp)
-                                ) {
-                                    Text(
-                                        text = lastReading.category.label,
-                                        style = MaterialTheme.typography.labelMedium,
-                                        color = Color.White,
-                                        fontWeight = FontWeight.SemiBold,
-                                        modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp)
-                                    )
-                                }
+                                Icon(
+                                    imageVector = Icons.Filled.Schedule,
+                                    contentDescription = null,
+                                    tint = Color.White.copy(alpha = 0.7f),
+                                    modifier = Modifier.size(14.dp)
+                                )
+                                Text(
+                                    text = lastReading.formattedDateTime,
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = Color.White.copy(alpha = 0.7f)
+                                )
                             }
-                            
-                            Spacer(modifier = Modifier.height(8.dp))
-                            
-                            Text(
-                                text = lastReading.formattedDateTime,
-                                style = MaterialTheme.typography.bodySmall,
-                                color = Color.White.copy(alpha = 0.7f)
-                            )
                         } else {
                             Text(
                                 text = "No readings yet",
-                                style = MaterialTheme.typography.headlineSmall,
-                                color = Color.White
+                                style = MaterialTheme.typography.titleLarge,
+                                color = Color.White,
+                                fontWeight = FontWeight.Medium
+                            )
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Text(
+                                text = "Start tracking your blood pressure",
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = Color.White.copy(alpha = 0.7f)
                             )
                         }
                     }
                     
-                    Column(
-                        horizontalAlignment = Alignment.CenterHorizontally
+                    Box(
+                        modifier = Modifier
+                            .size(80.dp)
+                            .clip(RoundedCornerShape(22.dp))
+                            .background(Color.White.copy(alpha = 0.15f))
+                            .border(
+                                width = 1.5.dp,
+                                color = Color.White.copy(alpha = 0.25f),
+                                shape = RoundedCornerShape(22.dp)
+                            ),
+                        contentAlignment = Alignment.Center
                     ) {
-                        Box(
-                            modifier = Modifier
-                                .size(72.dp)
-                                .clip(RoundedCornerShape(20.dp))
-                                .background(Color.White.copy(alpha = 0.15f))
-                                .border(
-                                    width = 1.dp,
-                                    color = Color.White.copy(alpha = 0.2f),
-                                    shape = RoundedCornerShape(20.dp)
-                                ),
-                            contentAlignment = Alignment.Center
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally
                         ) {
-                            Column(
-                                horizontalAlignment = Alignment.CenterHorizontally
-                            ) {
-                                Text(
-                                    text = totalReadings.toString(),
-                                    style = MaterialTheme.typography.headlineMedium.copy(
-                                        fontWeight = FontWeight.Bold
-                                    ),
-                                    color = Color.White
-                                )
-                                Text(
-                                    text = "Total",
-                                    style = MaterialTheme.typography.labelSmall,
-                                    color = Color.White.copy(alpha = 0.8f)
-                                )
-                            }
+                            Text(
+                                text = totalReadings.toString(),
+                                style = MaterialTheme.typography.headlineLarge.copy(
+                                    fontWeight = FontWeight.Bold
+                                ),
+                                color = Color.White
+                            )
+                            Text(
+                                text = "Total",
+                                style = MaterialTheme.typography.labelSmall,
+                                color = Color.White.copy(alpha = 0.8f)
+                            )
                         }
                     }
                 }
@@ -326,42 +395,62 @@ private fun QuickStatsCard(
     avgPulse: Double
 ) {
     Card(
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(20.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .shadow(
+                elevation = 8.dp,
+                shape = RoundedCornerShape(24.dp),
+                ambientColor = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.05f)
+            ),
+        shape = RoundedCornerShape(24.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface
         )
     ) {
         Column(
-            modifier = Modifier.padding(20.dp)
+            modifier = Modifier.padding(24.dp)
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
+                horizontalArrangement = Arrangement.spacedBy(10.dp)
             ) {
                 Box(
                     modifier = Modifier
-                        .size(32.dp)
-                        .clip(RoundedCornerShape(10.dp))
-                        .background(MaterialTheme.colorScheme.secondaryContainer),
+                        .size(36.dp)
+                        .clip(RoundedCornerShape(12.dp))
+                        .background(
+                            brush = Brush.linearGradient(
+                                colors = listOf(
+                                    GradientBlueStart.copy(alpha = 0.15f),
+                                    GradientBlueEnd.copy(alpha = 0.1f)
+                                )
+                            )
+                        ),
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
                         imageVector = Icons.Filled.TrendingUp,
                         contentDescription = null,
-                        tint = MaterialTheme.colorScheme.onSecondaryContainer,
-                        modifier = Modifier.size(18.dp)
+                        tint = GradientBlueStart,
+                        modifier = Modifier.size(20.dp)
                     )
                 }
-                Text(
-                    text = "7-Day Averages",
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.SemiBold
-                )
+                Column {
+                    Text(
+                        text = "7-Day Averages",
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                    Text(
+                        text = "Your health overview",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
             }
             
-            Spacer(modifier = Modifier.height(20.dp))
+            Spacer(modifier = Modifier.height(24.dp))
             
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -369,7 +458,7 @@ private fun QuickStatsCard(
             ) {
                 StatItem(
                     label = "Systolic",
-                    value = if (avgSystolic > 0) "%.0f".format(avgSystolic) else "-",
+                    value = if (avgSystolic > 0) "%.0f".format(avgSystolic) else "--",
                     unit = "mmHg",
                     color = SystolicColor
                 )
@@ -377,13 +466,15 @@ private fun QuickStatsCard(
                 Box(
                     modifier = Modifier
                         .width(1.dp)
-                        .height(60.dp)
-                        .background(MaterialTheme.colorScheme.outlineVariant)
+                        .height(70.dp)
+                        .background(
+                            MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)
+                        )
                 )
                 
                 StatItem(
                     label = "Diastolic",
-                    value = if (avgDiastolic > 0) "%.0f".format(avgDiastolic) else "-",
+                    value = if (avgDiastolic > 0) "%.0f".format(avgDiastolic) else "--",
                     unit = "mmHg",
                     color = DiastolicColor
                 )
@@ -391,13 +482,15 @@ private fun QuickStatsCard(
                 Box(
                     modifier = Modifier
                         .width(1.dp)
-                        .height(60.dp)
-                        .background(MaterialTheme.colorScheme.outlineVariant)
+                        .height(70.dp)
+                        .background(
+                            MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)
+                        )
                 )
                 
                 StatItem(
                     label = "Pulse",
-                    value = if (avgPulse > 0) "%.0f".format(avgPulse) else "-",
+                    value = if (avgPulse > 0) "%.0f".format(avgPulse) else "--",
                     unit = "bpm",
                     color = PulseColor
                 )
@@ -419,21 +512,23 @@ private fun StatItem(
         Text(
             text = label,
             style = MaterialTheme.typography.labelMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            fontWeight = FontWeight.Medium
         )
-        Spacer(modifier = Modifier.height(4.dp))
+        Spacer(modifier = Modifier.height(8.dp))
         Text(
             text = value,
             style = MaterialTheme.typography.headlineMedium.copy(
                 fontWeight = FontWeight.Bold,
-                letterSpacing = (-1).sp
+                letterSpacing = (-0.5).sp
             ),
             color = color
         )
+        Spacer(modifier = Modifier.height(2.dp))
         Text(
             text = unit,
             style = MaterialTheme.typography.labelSmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
+            color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
         )
     }
 }
@@ -441,9 +536,14 @@ private fun StatItem(
 @Composable
 private fun EmptyStateCard(onAddReading: () -> Unit) {
     Card(
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(24.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .shadow(
+                elevation = 8.dp,
+                shape = RoundedCornerShape(28.dp),
+                ambientColor = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.05f)
+            ),
+        shape = RoundedCornerShape(28.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface
         )
@@ -451,12 +551,12 @@ private fun EmptyStateCard(onAddReading: () -> Unit) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(40.dp),
+                .padding(48.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Box(
                 modifier = Modifier
-                    .size(100.dp)
+                    .size(120.dp)
                     .clip(CircleShape)
                     .background(
                         brush = Brush.linearGradient(
@@ -471,31 +571,32 @@ private fun EmptyStateCard(onAddReading: () -> Unit) {
                 Icon(
                     imageVector = Icons.Filled.MonitorHeart,
                     contentDescription = null,
-                    modifier = Modifier.size(48.dp),
+                    modifier = Modifier.size(56.dp),
                     tint = MaterialTheme.colorScheme.primary
                 )
             }
             
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.height(28.dp))
             
             Text(
-                text = "Start Your Journey",
+                text = "Start Your Health Journey",
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                color = MaterialTheme.colorScheme.onSurface
             )
             
             Spacer(modifier = Modifier.height(12.dp))
             
             Text(
-                text = "Track your blood pressure readings to monitor your heart health and get personalized insights.",
+                text = "Track your blood pressure readings to monitor your heart health and receive personalized insights.",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.padding(horizontal = 8.dp)
+                lineHeight = 22.sp
             )
             
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(36.dp))
             
             Button(
                 onClick = onAddReading,
@@ -510,11 +611,11 @@ private fun EmptyStateCard(onAddReading: () -> Unit) {
                 Icon(
                     Icons.Filled.Add, 
                     contentDescription = null,
-                    modifier = Modifier.size(24.dp)
+                    modifier = Modifier.size(22.dp)
                 )
-                Spacer(modifier = Modifier.width(12.dp))
+                Spacer(modifier = Modifier.width(10.dp))
                 Text(
-                    "Add First Reading",
+                    "Add Your First Reading",
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.SemiBold
                 )

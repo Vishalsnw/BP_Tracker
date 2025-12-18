@@ -1,8 +1,10 @@
 package com.bptracker.ui.screens.settings
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -10,11 +12,16 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.bptracker.ui.theme.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -39,23 +46,24 @@ fun SettingsScreen(
     if (showDeleteDialog) {
         AlertDialog(
             onDismissRequest = { showDeleteDialog = false },
-            icon = { Icon(Icons.Filled.Warning, contentDescription = null) },
-            title = { Text("Delete All Data") },
+            icon = { Icon(Icons.Filled.Warning, contentDescription = null, tint = MaterialTheme.colorScheme.error) },
+            title = { Text("Delete All Data", fontWeight = FontWeight.SemiBold) },
             text = { 
                 Text("Are you sure you want to delete all readings? This action cannot be undone.") 
             },
             confirmButton = {
-                TextButton(
+                Button(
                     onClick = {
                         viewModel.deleteAllData()
                         showDeleteDialog = false
-                    }
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error)
                 ) {
-                    Text("Delete All", color = MaterialTheme.colorScheme.error)
+                    Text("Delete All")
                 }
             },
             dismissButton = {
-                TextButton(onClick = { showDeleteDialog = false }) {
+                OutlinedButton(onClick = { showDeleteDialog = false }) {
                     Text("Cancel")
                 }
             }
@@ -65,12 +73,35 @@ fun SettingsScreen(
     if (showAboutDialog) {
         AlertDialog(
             onDismissRequest = { showAboutDialog = false },
-            icon = { Icon(Icons.Filled.Favorite, contentDescription = null) },
-            title = { Text("Blood Pressure Tracker") },
+            icon = { 
+                Box(
+                    modifier = Modifier
+                        .size(48.dp)
+                        .clip(RoundedCornerShape(14.dp))
+                        .background(
+                            brush = Brush.linearGradient(
+                                colors = listOf(GradientHealthStart, GradientHealthEnd)
+                            )
+                        ),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        Icons.Filled.MonitorHeart, 
+                        contentDescription = null, 
+                        tint = Color.White,
+                        modifier = Modifier.size(28.dp)
+                    )
+                }
+            },
+            title = { Text("BP Tracker", fontWeight = FontWeight.Bold) },
             text = {
                 Column {
-                    Text("Version 1.0.0")
-                    Spacer(modifier = Modifier.height(8.dp))
+                    Text(
+                        "Version 1.0.0",
+                        style = MaterialTheme.typography.labelLarge,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                    Spacer(modifier = Modifier.height(12.dp))
                     Text(
                         "Track your blood pressure readings and monitor your heart health with detailed statistics and insights.",
                         style = MaterialTheme.typography.bodyMedium
@@ -84,7 +115,7 @@ fun SettingsScreen(
                 }
             },
             confirmButton = {
-                TextButton(onClick = { showAboutDialog = false }) {
+                Button(onClick = { showAboutDialog = false }) {
                     Text("OK")
                 }
             }
@@ -94,7 +125,16 @@ fun SettingsScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Settings", fontWeight = FontWeight.Bold) }
+                title = { 
+                    Text(
+                        "Settings", 
+                        fontWeight = FontWeight.Bold,
+                        style = MaterialTheme.typography.titleLarge
+                    ) 
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.background
+                )
             )
         }
     ) { padding ->
@@ -103,112 +143,134 @@ fun SettingsScreen(
                 .fillMaxSize()
                 .padding(padding)
                 .verticalScroll(rememberScrollState())
+                .padding(horizontal = 20.dp)
         ) {
-            SettingsSection(title = "Profiles") {
+            Spacer(modifier = Modifier.height(8.dp))
+            
+            SettingsGroup(title = "Profiles") {
                 SettingsItem(
                     icon = Icons.Filled.People,
+                    iconColor = HealthcareIndigo,
                     title = "Family Profiles",
-                    subtitle = "Manage profiles for multiple family members",
+                    subtitle = "Manage profiles for family members",
                     onClick = onNavigateToProfiles
                 )
             }
             
-            SettingsSection(title = "Health Tracking") {
+            SettingsGroup(title = "Health Tracking") {
                 SettingsItem(
                     icon = Icons.Filled.MonitorWeight,
+                    iconColor = AccentPurple,
                     title = "Weight Tracking",
                     subtitle = "Track weight and BMI",
                     onClick = onNavigateToWeight
                 )
                 SettingsItem(
                     icon = Icons.Filled.Bloodtype,
+                    iconColor = AccentPink,
                     title = "Blood Glucose",
                     subtitle = "Monitor blood sugar levels",
-                    onClick = onNavigateToGlucose
+                    onClick = onNavigateToGlucose,
+                    showDivider = true
                 )
                 SettingsItem(
                     icon = Icons.Filled.Medication,
+                    iconColor = HealthcareGreen,
                     title = "Medications",
-                    subtitle = "Track your blood pressure medications",
-                    onClick = onNavigateToMedications
+                    subtitle = "Track your medications",
+                    onClick = onNavigateToMedications,
+                    showDivider = true
                 )
                 SettingsItem(
                     icon = Icons.Filled.Air,
+                    iconColor = HealthcareTeal,
                     title = "Breathing Exercises",
-                    subtitle = "Guided relaxation to help lower blood pressure",
+                    subtitle = "Guided relaxation techniques",
                     onClick = onNavigateToBreathing
                 )
             }
             
-            SettingsSection(title = "Goals & Insights") {
+            SettingsGroup(title = "Goals & Insights") {
                 SettingsItem(
                     icon = Icons.Filled.Flag,
+                    iconColor = GoldStar,
                     title = "Health Goals",
                     subtitle = "Set and track your health targets",
                     onClick = onNavigateToGoals
                 )
                 SettingsItem(
                     icon = Icons.Filled.Insights,
+                    iconColor = GradientBlueStart,
                     title = "Insights & Analytics",
-                    subtitle = "Personalized health insights based on your data",
+                    subtitle = "Personalized health insights",
                     onClick = onNavigateToInsights
                 )
             }
             
-            SettingsSection(title = "Devices & Sync") {
+            SettingsGroup(title = "Devices & Sync") {
                 SettingsItem(
                     icon = Icons.Filled.Bluetooth,
+                    iconColor = DiastolicColor,
                     title = "Bluetooth BP Monitor",
-                    subtitle = "Connect to compatible Bluetooth monitors",
+                    subtitle = "Connect to Bluetooth monitors",
                     onClick = onNavigateToBluetooth
                 )
                 SettingsItem(
                     icon = Icons.Filled.HealthAndSafety,
+                    iconColor = HealthcareGreen,
                     title = "Health Connect",
-                    subtitle = "Sync with Android Health Connect",
+                    subtitle = "Sync with Android Health",
                     onClick = onNavigateToHealthConnect
                 )
             }
             
-            SettingsSection(title = "Safety") {
+            SettingsGroup(title = "Safety") {
                 SettingsItem(
                     icon = Icons.Filled.Emergency,
+                    iconColor = HealthcareRed,
                     title = "Crisis Response",
-                    subtitle = "Set up emergency contacts and alerts",
+                    subtitle = "Emergency contacts and alerts",
                     onClick = onNavigateToEmergency
                 )
             }
             
-            SettingsSection(title = "Notifications") {
+            SettingsGroup(title = "Notifications") {
                 SettingsItem(
                     icon = Icons.Filled.Alarm,
+                    iconColor = GradientSunsetStart,
                     title = "Measurement Reminders",
-                    subtitle = "Set up reminders to measure your blood pressure",
+                    subtitle = "Set up daily reminders",
                     onClick = onNavigateToReminders
                 )
             }
             
-            SettingsSection(title = "Data") {
+            SettingsGroup(title = "Data Management") {
                 SettingsItem(
                     icon = Icons.Filled.PictureAsPdf,
+                    iconColor = HealthcareRed,
                     title = "Export to PDF",
                     subtitle = "Export your readings history",
                     onClick = { viewModel.exportData() }
                 )
                 SettingsItem(
                     icon = Icons.Filled.TableChart,
+                    iconColor = HealthcareGreen,
                     title = "Export to CSV",
                     subtitle = "Export for spreadsheet analysis",
-                    onClick = { viewModel.exportCsv() }
+                    onClick = { viewModel.exportCsv() },
+                    showDivider = true
                 )
                 SettingsItem(
                     icon = Icons.Filled.LocalHospital,
+                    iconColor = DiastolicColor,
                     title = "Doctor Visit Report",
-                    subtitle = "Generate a summary report for your doctor",
-                    onClick = { viewModel.generateDoctorReport() }
+                    subtitle = "Generate summary for your doctor",
+                    onClick = { viewModel.generateDoctorReport() },
+                    showDivider = true
                 )
                 SettingsItem(
                     icon = Icons.Filled.DeleteForever,
+                    iconColor = HealthcareRed,
                     title = "Delete All Data",
                     subtitle = "Remove all readings permanently",
                     onClick = { showDeleteDialog = true },
@@ -216,94 +278,142 @@ fun SettingsScreen(
                 )
             }
             
-            SettingsSection(title = "About") {
+            SettingsGroup(title = "About") {
                 SettingsItem(
                     icon = Icons.Filled.Info,
+                    iconColor = HealthcareBlue,
                     title = "About",
                     subtitle = "Version 1.0.0",
                     onClick = { showAboutDialog = true }
                 )
                 SettingsItem(
                     icon = Icons.Filled.PrivacyTip,
+                    iconColor = HealthcareIndigo,
                     title = "Privacy Policy",
                     subtitle = "Read our privacy policy",
                     onClick = { }
                 )
             }
             
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(24.dp))
             
             Text(
-                text = "Blood Pressure Tracker v1.0.0",
+                text = "BP Tracker v1.0.0",
                 style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(16.dp)
+                    .padding(vertical = 8.dp),
+                textAlign = androidx.compose.ui.text.style.TextAlign.Center
             )
+            
+            Spacer(modifier = Modifier.height(32.dp))
         }
     }
 }
 
 @Composable
-private fun SettingsSection(
+private fun SettingsGroup(
     title: String,
     content: @Composable () -> Unit
 ) {
-    Column {
+    Column(
+        modifier = Modifier.padding(vertical = 8.dp)
+    ) {
         Text(
             text = title,
-            style = MaterialTheme.typography.titleSmall,
+            style = MaterialTheme.typography.labelLarge,
             color = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+            fontWeight = FontWeight.SemiBold,
+            modifier = Modifier.padding(start = 4.dp, bottom = 12.dp)
         )
-        content()
-        Divider(modifier = Modifier.padding(vertical = 8.dp))
+        Card(
+            modifier = Modifier
+                .fillMaxWidth()
+                .shadow(
+                    elevation = 4.dp,
+                    shape = RoundedCornerShape(20.dp),
+                    ambientColor = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.03f)
+                ),
+            shape = RoundedCornerShape(20.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surface
+            )
+        ) {
+            Column {
+                content()
+            }
+        }
     }
 }
 
 @Composable
 private fun SettingsItem(
     icon: ImageVector,
+    iconColor: Color,
     title: String,
     subtitle: String,
     onClick: () -> Unit,
-    isDestructive: Boolean = false
+    isDestructive: Boolean = false,
+    showDivider: Boolean = false
 ) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable(onClick = onClick)
-            .padding(horizontal = 16.dp, vertical = 12.dp),
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Icon(
-            imageVector = icon,
-            contentDescription = null,
-            tint = if (isDestructive) MaterialTheme.colorScheme.error 
-                   else MaterialTheme.colorScheme.onSurfaceVariant
-        )
-        
-        Spacer(modifier = Modifier.width(16.dp))
-        
-        Column(modifier = Modifier.weight(1f)) {
-            Text(
-                text = title,
-                style = MaterialTheme.typography.bodyLarge,
-                color = if (isDestructive) MaterialTheme.colorScheme.error 
-                        else MaterialTheme.colorScheme.onSurface
-            )
-            Text(
-                text = subtitle,
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+    Column {
+        if (showDivider) {
+            HorizontalDivider(
+                modifier = Modifier.padding(horizontal = 16.dp),
+                color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)
             )
         }
-        
-        Icon(
-            imageVector = Icons.Filled.ChevronRight,
-            contentDescription = null,
-            tint = MaterialTheme.colorScheme.onSurfaceVariant
-        )
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable(onClick = onClick)
+                .padding(horizontal = 16.dp, vertical = 14.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(42.dp)
+                    .clip(RoundedCornerShape(12.dp))
+                    .background(
+                        if (isDestructive) 
+                            MaterialTheme.colorScheme.error.copy(alpha = 0.1f)
+                        else 
+                            iconColor.copy(alpha = 0.1f)
+                    ),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    imageVector = icon,
+                    contentDescription = null,
+                    tint = if (isDestructive) MaterialTheme.colorScheme.error else iconColor,
+                    modifier = Modifier.size(22.dp)
+                )
+            }
+            
+            Spacer(modifier = Modifier.width(14.dp))
+            
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.bodyLarge,
+                    fontWeight = FontWeight.Medium,
+                    color = if (isDestructive) MaterialTheme.colorScheme.error 
+                            else MaterialTheme.colorScheme.onSurface
+                )
+                Text(
+                    text = subtitle,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
+                )
+            }
+            
+            Icon(
+                imageVector = Icons.Filled.ChevronRight,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4f),
+                modifier = Modifier.size(20.dp)
+            )
+        }
     }
 }
