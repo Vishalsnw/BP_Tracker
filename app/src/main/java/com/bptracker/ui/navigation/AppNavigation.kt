@@ -166,6 +166,25 @@ fun AppNavigation() {
                 )
             }
             
+            composable(
+                route = "add_reading?systolic={systolic}&diastolic={diastolic}&pulse={pulse}",
+                arguments = listOf(
+                    navArgument("systolic") { type = NavType.IntType; defaultValue = 0 },
+                    navArgument("diastolic") { type = NavType.IntType; defaultValue = 0 },
+                    navArgument("pulse") { type = NavType.IntType; defaultValue = 0 }
+                )
+            ) { backStackEntry ->
+                val systolic = backStackEntry.arguments?.getInt("systolic") ?: 0
+                val diastolic = backStackEntry.arguments?.getInt("diastolic") ?: 0
+                val pulse = backStackEntry.arguments?.getInt("pulse") ?: 0
+                AddReadingScreen(
+                    onNavigateBack = { navController.popBackStack() },
+                    initialSystolic = systolic,
+                    initialDiastolic = diastolic,
+                    initialPulse = pulse
+                )
+            }
+            
             composable(Screen.AddReading.route) {
                 AddReadingScreen(
                     onNavigateBack = { navController.popBackStack() }
@@ -273,7 +292,7 @@ fun AppNavigation() {
                     onNavigateBack = { navController.popBackStack() },
                     onReadingReceived = { systolic, diastolic, pulse ->
                         navController.popBackStack()
-                        navController.navigate(Screen.AddReading.route)
+                        navController.navigate("add_reading?systolic=$systolic&diastolic=$diastolic&pulse=$pulse")
                     }
                 )
             }

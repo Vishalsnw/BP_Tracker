@@ -92,18 +92,27 @@ class HealthConnectViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update { it.copy(isSyncing = true, syncMessage = null) }
             
-            val readings = bloodPressureRepository.getAllReadings().first()
-            val result = healthConnectManager.syncAllReadings(readings)
-            
-            _uiState.update { 
-                it.copy(
-                    isSyncing = false,
-                    syncMessage = if (result.success) {
-                        "Successfully synced ${result.syncedReadings} readings"
-                    } else {
-                        result.errorMessage ?: "Sync failed"
-                    }
-                )
+            try {
+                val readings = bloodPressureRepository.getAllReadings().first()
+                val result = healthConnectManager.syncAllReadings(readings)
+                
+                _uiState.update { 
+                    it.copy(
+                        isSyncing = false,
+                        syncMessage = if (result.success) {
+                            "Successfully synced ${result.syncedReadings} BP readings to Health Connect"
+                        } else {
+                            result.errorMessage ?: "Sync failed"
+                        }
+                    )
+                }
+            } catch (e: Exception) {
+                _uiState.update {
+                    it.copy(
+                        isSyncing = false,
+                        syncMessage = "Sync failed: ${e.message}"
+                    )
+                }
             }
         }
     }

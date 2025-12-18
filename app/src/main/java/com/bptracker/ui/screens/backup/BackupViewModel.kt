@@ -79,27 +79,44 @@ class BackupViewModel @Inject constructor(
     
     fun restoreBackup(backupId: String) {
         viewModelScope.launch {
-            val backupData = cloudBackupManager.restoreBackup(backupId)
-            if (backupData != null) {
-                // Restore data to local database
-                backupData.readings.forEach { reading ->
-                    bloodPressureRepository.insertReading(reading)
+            try {
+                val backupData = cloudBackupManager.restoreBackup(backupId)
+                if (backupData != null) {
+                    var restoredCount = 0
+                    backupData.readings.forEach { reading ->
+                        try {
+                            bloodPressureRepository.insertReading(reading)
+                            restoredCount++
+                        } catch (e: Exception) { /* Skip duplicates */ }
+                    }
+                    backupData.medications.forEach { medication ->
+                        try {
+                            medicationRepository.insertMedication(medication)
+                        } catch (e: Exception) { /* Skip duplicates */ }
+                    }
+                    backupData.reminders.forEach { reminder ->
+                        try {
+                            reminderRepository.insertReminder(reminder)
+                        } catch (e: Exception) { /* Skip duplicates */ }
+                    }
+                    backupData.profiles.forEach { profile ->
+                        try {
+                            profileRepository.insertProfile(profile)
+                        } catch (e: Exception) { /* Skip duplicates */ }
+                    }
+                    backupData.weightEntries.forEach { entry ->
+                        try {
+                            weightRepository.insertEntry(entry)
+                        } catch (e: Exception) { /* Skip duplicates */ }
+                    }
+                    backupData.glucoseEntries.forEach { entry ->
+                        try {
+                            glucoseRepository.insertEntry(entry)
+                        } catch (e: Exception) { /* Skip duplicates */ }
+                    }
                 }
-                backupData.medications.forEach { medication ->
-                    medicationRepository.insertMedication(medication)
-                }
-                backupData.reminders.forEach { reminder ->
-                    reminderRepository.insertReminder(reminder)
-                }
-                backupData.profiles.forEach { profile ->
-                    profileRepository.insertProfile(profile)
-                }
-                backupData.weightEntries.forEach { entry ->
-                    weightRepository.insertEntry(entry)
-                }
-                backupData.glucoseEntries.forEach { entry ->
-                    glucoseRepository.insertEntry(entry)
-                }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
     }

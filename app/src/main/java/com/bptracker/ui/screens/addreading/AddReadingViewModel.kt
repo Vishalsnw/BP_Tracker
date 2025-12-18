@@ -79,6 +79,17 @@ class AddReadingViewModel @Inject constructor(
         }
     }
     
+    fun setInitialValues(systolic: Int, diastolic: Int, pulse: Int) {
+        _uiState.update { state ->
+            state.copy(
+                systolic = if (systolic > 0) systolic else state.systolic,
+                diastolic = if (diastolic > 0) diastolic else state.diastolic,
+                pulse = if (pulse > 0) pulse else state.pulse,
+                notes = "Imported from Bluetooth BP Monitor"
+            )
+        }
+    }
+    
     fun updateSystolic(value: Int) {
         _uiState.update { it.copy(systolic = value, validationError = null) }
     }

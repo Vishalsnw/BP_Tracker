@@ -23,13 +23,18 @@ import com.bptracker.ui.theme.*
 fun AddReadingScreen(
     readingId: Long? = null,
     onNavigateBack: () -> Unit,
+    initialSystolic: Int = 0,
+    initialDiastolic: Int = 0,
+    initialPulse: Int = 0,
     viewModel: AddReadingViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     
-    LaunchedEffect(readingId) {
+    LaunchedEffect(readingId, initialSystolic, initialDiastolic, initialPulse) {
         if (readingId != null && readingId > 0) {
             viewModel.loadReading(readingId)
+        } else if (initialSystolic > 0 || initialDiastolic > 0 || initialPulse > 0) {
+            viewModel.setInitialValues(initialSystolic, initialDiastolic, initialPulse)
         }
     }
     

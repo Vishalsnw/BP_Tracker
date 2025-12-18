@@ -38,8 +38,16 @@ fun BackupScreen(
     val signInLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult()
     ) { result ->
-        val account = GoogleSignIn.getSignedInAccountFromIntent(result.data).result
-        viewModel.handleSignInResult(account)
+        try {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+            if (task.isSuccessful) {
+                viewModel.handleSignInResult(task.result)
+            } else {
+                viewModel.handleSignInResult(null)
+            }
+        } catch (e: Exception) {
+            viewModel.handleSignInResult(null)
+        }
     }
     
     LaunchedEffect(backupState) {
