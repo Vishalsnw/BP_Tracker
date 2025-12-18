@@ -1,5 +1,7 @@
 package com.bptracker.ui.screens.bluetooth
 
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
@@ -35,6 +37,17 @@ fun BluetoothScreen(
     val bluetoothState by viewModel.bluetoothState.collectAsStateWithLifecycle()
     val devices by viewModel.discoveredDevices.collectAsStateWithLifecycle()
     val latestReading by viewModel.latestReading.collectAsStateWithLifecycle()
+    
+    val permissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        val allGranted = permissions.values.all { it }
+        if (allGranted) {
+            viewModel.onPermissionsGranted()
+        } else {
+            viewModel.onPermissionsDenied()
+        }
+    }
     
     LaunchedEffect(latestReading) {
         latestReading?.let { reading ->
@@ -82,7 +95,9 @@ fun BluetoothScreen(
                 }
                 BluetoothState.PermissionRequired -> {
                     PermissionRequiredContent(
-                        onRequestPermission = { viewModel.requestPermissions() }
+                        onRequestPermission = { 
+                            permissionLauncher.launch(viewModel.getRequiredPermissions())
+                        }
                     )
                 }
                 BluetoothState.Idle -> {

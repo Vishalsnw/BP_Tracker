@@ -49,6 +49,10 @@ class BackupViewModel @Inject constructor(
         cloudBackupManager.handleSignInResult(account)
     }
     
+    fun handleSignInError(errorMessage: String) {
+        cloudBackupManager.handleSignInError(errorMessage)
+    }
+    
     fun signOut() {
         viewModelScope.launch {
             cloudBackupManager.signOut()

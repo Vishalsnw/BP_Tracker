@@ -1,5 +1,8 @@
 package com.bptracker.ui.screens.emergency
 
+import android.Manifest
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -38,6 +41,34 @@ fun EmergencyScreen(
     var showAddContactDialog by remember { mutableStateOf(false) }
     var editingContact by remember { mutableStateOf<EmergencyContact?>(null) }
     var showDeleteDialog by remember { mutableStateOf<EmergencyContact?>(null) }
+    var showSmsPermissionDeniedDialog by remember { mutableStateOf(false) }
+    
+    val smsPermissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (isGranted) {
+            viewModel.toggleSmsAlerts(true)
+        } else {
+            viewModel.toggleSmsAlerts(false)
+            showSmsPermissionDeniedDialog = true
+        }
+    }
+    
+    if (showSmsPermissionDeniedDialog) {
+        AlertDialog(
+            onDismissRequest = { showSmsPermissionDeniedDialog = false },
+            icon = { Icon(Icons.Filled.SmsNotifications, contentDescription = null) },
+            title = { Text("SMS Permission Required") },
+            text = { 
+                Text("SMS permission is required to send emergency alerts to your contacts. Please enable it in Settings to use this feature.") 
+            },
+            confirmButton = {
+                TextButton(onClick = { showSmsPermissionDeniedDialog = false }) {
+                    Text("OK")
+                }
+            }
+        )
+    }
     
     if (showAddContactDialog || editingContact != null) {
         AddContactDialog(
@@ -259,7 +290,17 @@ fun EmergencyScreen(
                             }
                             Switch(
                                 checked = settings.sendSmsAlert,
-                                onCheckedChange = { viewModel.toggleSmsAlerts(it) },
+                                onCheckedChange = { enabled ->
+                                    if (enabled) {
+                                        if (viewModel.hasSmsPermission()) {
+                                            viewModel.toggleSmsAlerts(true)
+                                        } else {
+                                            smsPermissionLauncher.launch(Manifest.permission.SEND_SMS)
+                                        }
+                                    } else {
+                                        viewModel.toggleSmsAlerts(false)
+                                    }
+                                },
                                 enabled = settings.isEnabled
                             )
                         }

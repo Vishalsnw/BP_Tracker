@@ -45,11 +45,20 @@ class BluetoothViewModel @Inject constructor(
     }
     
     fun requestPermissions() {
-        // Permission request is handled by the Activity
-        // This method triggers a re-check
         if (bluetoothBPMonitor.hasBluetoothPermissions()) {
             startScan()
         }
+    }
+    
+    fun onPermissionsGranted() {
+        bluetoothBPMonitor.onPermissionsGranted()
+        if (bluetoothBPMonitor.isBluetoothEnabled()) {
+            startScan()
+        }
+    }
+    
+    fun onPermissionsDenied() {
+        bluetoothBPMonitor.onPermissionsDenied()
     }
     
     fun isBluetoothSupported(): Boolean = bluetoothBPMonitor.isBluetoothSupported()

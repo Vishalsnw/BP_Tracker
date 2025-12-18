@@ -92,6 +92,18 @@ class BluetoothBPMonitor @Inject constructor(
     
     fun isBluetoothSupported(): Boolean = bluetoothAdapter != null
     
+    fun onPermissionsGranted() {
+        if (isBluetoothEnabled()) {
+            _state.value = BluetoothState.Idle
+        } else {
+            _state.value = BluetoothState.BluetoothDisabled
+        }
+    }
+    
+    fun onPermissionsDenied() {
+        _state.value = BluetoothState.Error("Bluetooth permissions are required to connect to BP monitors")
+    }
+    
     @SuppressLint("MissingPermission")
     fun startScan() {
         if (!hasBluetoothPermissions()) {

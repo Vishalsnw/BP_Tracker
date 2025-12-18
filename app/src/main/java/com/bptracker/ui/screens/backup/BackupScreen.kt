@@ -20,6 +20,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.bptracker.utils.BackupMetadata
 import com.bptracker.utils.BackupState
 import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.common.api.ApiException
 import java.time.format.DateTimeFormatter
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -40,13 +41,28 @@ fun BackupScreen(
     ) { result ->
         try {
             val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
-            if (task.isSuccessful) {
-                viewModel.handleSignInResult(task.result)
-            } else {
-                viewModel.handleSignInResult(null)
+            val account = task.getResult(ApiException::class.java)
+            viewModel.handleSignInResult(account)
+        } catch (e: ApiException) {
+            when (e.statusCode) {
+                12501 -> {
+                    // User cancelled - just return to signed out state without error
+                }
+                12502 -> {
+                    viewModel.handleSignInError("Sign in currently in progress")
+                }
+                7 -> {
+                    viewModel.handleSignInError("Network error. Please check your connection")
+                }
+                10 -> {
+                    viewModel.handleSignInError("Developer error. Please contact support")
+                }
+                else -> {
+                    viewModel.handleSignInError("Sign in failed (Error ${e.statusCode})")
+                }
             }
         } catch (e: Exception) {
-            viewModel.handleSignInResult(null)
+            viewModel.handleSignInError("Sign in failed: ${e.message}")
         }
     }
     

@@ -143,6 +143,10 @@ class CloudBackupManager @Inject constructor(
         }
     }
     
+    fun handleSignInError(errorMessage: String) {
+        _state.value = BackupState.Error(errorMessage)
+    }
+    
     private fun initDriveService(account: GoogleSignInAccount) {
         val credential = GoogleAccountCredential.usingOAuth2(
             context,
