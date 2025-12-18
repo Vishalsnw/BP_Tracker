@@ -286,7 +286,7 @@ private fun HeroCard(
                                     text = "/",
                                     style = MaterialTheme.typography.displaySmall,
                                     color = Color.White.copy(alpha = 0.6f),
-                                    modifier = Modifier.padding(horizontal = 4.dp, bottom = 4.dp)
+                                    modifier = Modifier.padding(start = 4.dp, end = 4.dp, bottom = 4.dp)
                                 )
                                 Text(
                                     text = "${lastReading.diastolic}",
