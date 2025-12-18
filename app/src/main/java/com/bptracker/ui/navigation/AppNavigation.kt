@@ -35,7 +35,6 @@ import com.bptracker.ui.screens.statistics.StatisticsScreen
 import com.bptracker.ui.screens.voice.VoiceInputScreen
 import com.bptracker.ui.screens.weight.WeightScreen
 import com.bptracker.ui.screens.bluetooth.BluetoothScreen
-import com.bptracker.ui.screens.backup.BackupScreen
 import com.bptracker.ui.screens.emergency.EmergencyScreen
 import com.bptracker.ui.screens.healthconnect.HealthConnectScreen
 
@@ -65,7 +64,6 @@ sealed class Screen(
     object Goals : Screen("goals", "Goals", Icons.Filled.Flag, Icons.Outlined.Flag)
     object Insights : Screen("insights", "Insights", Icons.Filled.Insights, Icons.Outlined.Insights)
     object Bluetooth : Screen("bluetooth", "Bluetooth", Icons.Filled.Bluetooth, Icons.Outlined.Bluetooth)
-    object Backup : Screen("backup", "Backup", Icons.Filled.Cloud, Icons.Outlined.Cloud)
     object Emergency : Screen("emergency", "Emergency", Icons.Filled.Emergency, Icons.Outlined.Emergency)
     object HealthConnect : Screen("health_connect", "Health Connect", Icons.Filled.HealthAndSafety, Icons.Outlined.HealthAndSafety)
 }
@@ -160,7 +158,6 @@ fun AppNavigation() {
                     onNavigateToGoals = { navController.navigate(Screen.Goals.route) },
                     onNavigateToInsights = { navController.navigate(Screen.Insights.route) },
                     onNavigateToBluetooth = { navController.navigate(Screen.Bluetooth.route) },
-                    onNavigateToBackup = { navController.navigate(Screen.Backup.route) },
                     onNavigateToEmergency = { navController.navigate(Screen.Emergency.route) },
                     onNavigateToHealthConnect = { navController.navigate(Screen.HealthConnect.route) }
                 )
@@ -294,12 +291,6 @@ fun AppNavigation() {
                         navController.popBackStack()
                         navController.navigate("add_reading?systolic=$systolic&diastolic=$diastolic&pulse=$pulse")
                     }
-                )
-            }
-            
-            composable(Screen.Backup.route) {
-                BackupScreen(
-                    onNavigateBack = { navController.popBackStack() }
                 )
             }
             

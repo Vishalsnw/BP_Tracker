@@ -28,7 +28,6 @@ fun SettingsScreen(
     onNavigateToGoals: () -> Unit = {},
     onNavigateToInsights: () -> Unit = {},
     onNavigateToBluetooth: () -> Unit = {},
-    onNavigateToBackup: () -> Unit = {},
     onNavigateToEmergency: () -> Unit = {},
     onNavigateToHealthConnect: () -> Unit = {},
     viewModel: SettingsViewModel = hiltViewModel()
@@ -168,12 +167,6 @@ fun SettingsScreen(
                     title = "Health Connect",
                     subtitle = "Sync with Android Health Connect",
                     onClick = onNavigateToHealthConnect
-                )
-                SettingsItem(
-                    icon = Icons.Filled.Cloud,
-                    title = "Cloud Backup",
-                    subtitle = "Backup data to Google Drive",
-                    onClick = onNavigateToBackup
                 )
             }
             

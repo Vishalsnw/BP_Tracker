@@ -122,12 +122,6 @@ dependencies {
     // Health Connect (Android Health API - replacement for Google Fit)
     implementation("androidx.health.connect:connect-client:1.1.0-alpha06")
 
-    // Google Drive API for Cloud Backup
-    implementation("com.google.android.gms:play-services-auth:20.7.0")
-    implementation("com.google.api-client:google-api-client-android:2.2.0")
-    implementation("com.google.apis:google-api-services-drive:v3-rev20231128-2.0.0")
-    implementation("com.google.http-client:google-http-client-gson:1.43.3")
-
     // Bluetooth Low Energy
     implementation("androidx.core:core-ktx:1.12.0")
 

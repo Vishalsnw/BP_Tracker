@@ -13,7 +13,6 @@ import com.bptracker.data.database.ProfileDao
 import com.bptracker.data.database.ReminderDao
 import com.bptracker.data.database.WeightDao
 import com.bptracker.utils.BluetoothBPMonitor
-import com.bptracker.utils.CloudBackupManager
 import com.bptracker.utils.CrisisResponseManager
 import com.bptracker.utils.HealthConnectManager
 import dagger.Module
@@ -108,12 +107,6 @@ object AppModule {
     @Singleton
     fun provideBluetoothBPMonitor(@ApplicationContext context: Context): BluetoothBPMonitor {
         return BluetoothBPMonitor(context)
-    }
-    
-    @Provides
-    @Singleton
-    fun provideCloudBackupManager(@ApplicationContext context: Context): CloudBackupManager {
-        return CloudBackupManager(context)
     }
     
     @Provides
