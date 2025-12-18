@@ -136,19 +136,19 @@ fun HealthConnectScreen(
                             title = "Blood Pressure",
                             description = "Systolic, diastolic, and measurement location"
                         )
-                        HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp))
+                        Divider(modifier = Modifier.padding(vertical = 12.dp))
                         SyncFeatureItem(
                             icon = Icons.Filled.MonitorHeart,
                             title = "Heart Rate",
                             description = "Pulse readings synced with BP measurements"
                         )
-                        HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp))
+                        Divider(modifier = Modifier.padding(vertical = 12.dp))
                         SyncFeatureItem(
                             icon = Icons.Filled.MonitorWeight,
                             title = "Weight",
                             description = "Weight entries and BMI calculations"
                         )
-                        HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp))
+                        Divider(modifier = Modifier.padding(vertical = 12.dp))
                         SyncFeatureItem(
                             icon = Icons.Filled.Bloodtype,
                             title = "Blood Glucose",

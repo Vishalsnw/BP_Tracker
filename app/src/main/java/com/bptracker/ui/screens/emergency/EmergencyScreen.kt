@@ -238,7 +238,7 @@ fun EmergencyScreen(
                             )
                         }
                         
-                        HorizontalDivider(modifier = Modifier.padding(vertical = 16.dp))
+                        Divider(modifier = Modifier.padding(vertical = 16.dp))
                         
                         Row(
                             modifier = Modifier.fillMaxWidth(),
@@ -264,7 +264,7 @@ fun EmergencyScreen(
                             )
                         }
                         
-                        HorizontalDivider(modifier = Modifier.padding(vertical = 16.dp))
+                        Divider(modifier = Modifier.padding(vertical = 16.dp))
                         
                         Row(
                             modifier = Modifier.fillMaxWidth(),
