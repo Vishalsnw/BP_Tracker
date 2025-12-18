@@ -1,4 +1,4 @@
-modules = ["bash", "java-graalvm22.3"]
+modules = ["bash"]
 [agent]
 expertMode = true
 
