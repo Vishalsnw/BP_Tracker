@@ -67,9 +67,9 @@ class InsightGenerator @Inject constructor() {
             insights.add(createMoreDataNeededInsight(readings.size))
         }
         
-        val normalPercentage = readings.count { it.category == BloodPressureCategory.NORMAL }.toFloat() / readings.size
-        if (normalPercentage > 0.7) {
-            insights.add(createGoodProgressInsight(normalPercentage))
+        val idealPercentage = readings.count { it.category == BloodPressureCategory.IDEAL }.toFloat() / readings.size
+        if (idealPercentage > 0.7) {
+            insights.add(createGoodProgressInsight(idealPercentage))
         }
         
         insights.add(createRandomTipInsight())
@@ -115,9 +115,9 @@ class InsightGenerator @Inject constructor() {
         val thisWeekAvgPulse = if (thisWeekReadings.isNotEmpty()) 
             thisWeekReadings.map { it.pulse }.average() else 0.0
         
-        val normalCount = thisWeekReadings.count { it.category == BloodPressureCategory.NORMAL }
+        val idealCount = thisWeekReadings.count { it.category == BloodPressureCategory.IDEAL }
         val normalPercentage = if (thisWeekReadings.isNotEmpty()) 
-            normalCount.toFloat() / thisWeekReadings.size * 100 else 0f
+            idealCount.toFloat() / thisWeekReadings.size * 100 else 0f
         
         var trend = TrendDirection.STABLE
         var systolicChange = 0.0

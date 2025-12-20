@@ -9,21 +9,20 @@ data class Statistics(
     val minSystolic: Int = 0,
     val minDiastolic: Int = 0,
     val totalReadings: Int = 0,
-    val normalCount: Int = 0,
-    val elevatedCount: Int = 0,
-    val highStage1Count: Int = 0,
-    val highStage2Count: Int = 0,
-    val crisisCount: Int = 0
+    val lowCount: Int = 0,
+    val idealCount: Int = 0,
+    val preHighCount: Int = 0,
+    val highCount: Int = 0
 ) {
-    val normalPercentage: Float
-        get() = if (totalReadings > 0) normalCount.toFloat() / totalReadings * 100 else 0f
+    val lowPercentage: Float
+        get() = if (totalReadings > 0) lowCount.toFloat() / totalReadings * 100 else 0f
     
-    val elevatedPercentage: Float
-        get() = if (totalReadings > 0) elevatedCount.toFloat() / totalReadings * 100 else 0f
+    val idealPercentage: Float
+        get() = if (totalReadings > 0) idealCount.toFloat() / totalReadings * 100 else 0f
     
-    val highStage1Percentage: Float
-        get() = if (totalReadings > 0) highStage1Count.toFloat() / totalReadings * 100 else 0f
+    val preHighPercentage: Float
+        get() = if (totalReadings > 0) preHighCount.toFloat() / totalReadings * 100 else 0f
     
-    val highStage2Percentage: Float
-        get() = if (totalReadings > 0) highStage2Count.toFloat() / totalReadings * 100 else 0f
+    val highPercentage: Float
+        get() = if (totalReadings > 0) highCount.toFloat() / totalReadings * 100 else 0f
 }

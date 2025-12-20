@@ -30,12 +30,11 @@ data class BloodPressureReading(
     
     val category: BloodPressureCategory
         get() = when {
-            systolic > 180 || diastolic > 120 -> BloodPressureCategory.HYPERTENSIVE_CRISIS
-            systolic >= 140 || diastolic >= 90 -> BloodPressureCategory.HIGH_STAGE_2
-            systolic in 130..139 || diastolic in 80..89 -> BloodPressureCategory.HIGH_STAGE_1
-            systolic in 120..129 && diastolic < 80 -> BloodPressureCategory.ELEVATED
-            systolic < 120 && diastolic < 80 -> BloodPressureCategory.NORMAL
-            else -> BloodPressureCategory.NORMAL
+            systolic >= 140 || diastolic >= 90 -> BloodPressureCategory.HIGH
+            systolic in 120..139 || diastolic in 80..89 -> BloodPressureCategory.PRE_HIGH
+            systolic < 120 && diastolic < 80 -> BloodPressureCategory.IDEAL
+            systolic < 90 && diastolic < 60 -> BloodPressureCategory.LOW
+            else -> BloodPressureCategory.IDEAL
         }
     
     val meanArterialPressure: Double
@@ -61,11 +60,10 @@ data class BloodPressureReading(
 }
 
 enum class BloodPressureCategory(val label: String, val description: String) {
-    NORMAL("Normal", "Your blood pressure is in the normal range."),
-    ELEVATED("Elevated", "Your blood pressure is slightly elevated. Consider lifestyle changes."),
-    HIGH_STAGE_1("High - Stage 1", "You have stage 1 hypertension. Consult your doctor."),
-    HIGH_STAGE_2("High - Stage 2", "You have stage 2 hypertension. Seek medical advice."),
-    HYPERTENSIVE_CRISIS("Crisis", "Seek emergency medical attention immediately!")
+    LOW("Low", "Your blood pressure is low. Ensure you're well hydrated and rested."),
+    IDEAL("Ideal", "Your blood pressure is in the ideal range."),
+    PRE_HIGH("Pre-high", "Your blood pressure is elevated. Monitor it regularly."),
+    HIGH("High", "Your blood pressure is high. Consult your doctor.")
 }
 
 enum class ReadingTag(val label: String) {

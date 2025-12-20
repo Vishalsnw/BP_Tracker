@@ -113,10 +113,10 @@ fun StatisticsScreen(
                 
                 CategoryDistributionCard(
                     totalReadings = uiState.statistics.totalReadings,
-                    normalCount = uiState.statistics.normalCount,
-                    elevatedCount = uiState.statistics.elevatedCount,
-                    highStage1Count = uiState.statistics.highStage1Count,
-                    highStage2Count = uiState.statistics.highStage2Count
+                    lowCount = uiState.statistics.lowCount,
+                    idealCount = uiState.statistics.idealCount,
+                    preHighCount = uiState.statistics.preHighCount,
+                    highCount = uiState.statistics.highCount
                 )
                 
                 SummaryCard(totalReadings = uiState.statistics.totalReadings)
@@ -227,7 +227,7 @@ private fun RangeCard(
                                 Icons.Filled.ArrowDownward,
                                 contentDescription = null,
                                 modifier = Modifier.size(16.dp),
-                                tint = BPNormal
+                                tint = BPIdeal
                             )
                             Text(
                                 text = minSystolic.toString(),
@@ -268,7 +268,7 @@ private fun RangeCard(
                                 Icons.Filled.ArrowDownward,
                                 contentDescription = null,
                                 modifier = Modifier.size(16.dp),
-                                tint = BPNormal
+                                tint = BPIdeal
                             )
                             Text(
                                 text = minDiastolic.toString(),
@@ -286,10 +286,10 @@ private fun RangeCard(
 @Composable
 private fun CategoryDistributionCard(
     totalReadings: Int,
-    normalCount: Int,
-    elevatedCount: Int,
-    highStage1Count: Int,
-    highStage2Count: Int
+    lowCount: Int,
+    idealCount: Int,
+    preHighCount: Int,
+    highCount: Int
 ) {
     Card(
         modifier = Modifier.fillMaxWidth()
@@ -306,23 +306,23 @@ private fun CategoryDistributionCard(
             Spacer(modifier = Modifier.height(16.dp))
             
             CategoryBar(
-                category = BloodPressureCategory.NORMAL,
-                count = normalCount,
+                category = BloodPressureCategory.LOW,
+                count = lowCount,
                 total = totalReadings
             )
             CategoryBar(
-                category = BloodPressureCategory.ELEVATED,
-                count = elevatedCount,
+                category = BloodPressureCategory.IDEAL,
+                count = idealCount,
                 total = totalReadings
             )
             CategoryBar(
-                category = BloodPressureCategory.HIGH_STAGE_1,
-                count = highStage1Count,
+                category = BloodPressureCategory.PRE_HIGH,
+                count = preHighCount,
                 total = totalReadings
             )
             CategoryBar(
-                category = BloodPressureCategory.HIGH_STAGE_2,
-                count = highStage2Count,
+                category = BloodPressureCategory.HIGH,
+                count = highCount,
                 total = totalReadings
             )
         }

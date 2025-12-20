@@ -337,10 +337,9 @@ fun CategoryChip(category: BloodPressureCategory) {
 
 fun getCategoryColor(category: BloodPressureCategory): Color {
     return when (category) {
-        BloodPressureCategory.NORMAL -> BPNormal
-        BloodPressureCategory.ELEVATED -> BPElevated
-        BloodPressureCategory.HIGH_STAGE_1 -> BPHighStage1
-        BloodPressureCategory.HIGH_STAGE_2 -> BPHighStage2
-        BloodPressureCategory.HYPERTENSIVE_CRISIS -> BPCrisis
+        BloodPressureCategory.LOW -> BPLow
+        BloodPressureCategory.IDEAL -> BPIdeal
+        BloodPressureCategory.PRE_HIGH -> BPPreHigh
+        BloodPressureCategory.HIGH -> BPHigh
     }
 }

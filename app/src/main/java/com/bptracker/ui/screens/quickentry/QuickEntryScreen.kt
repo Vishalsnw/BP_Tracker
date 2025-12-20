@@ -175,11 +175,10 @@ fun QuickEntryScreen(
                     ) {
                         Icon(
                             imageVector = when (category) {
-                                BloodPressureCategory.NORMAL -> Icons.Filled.CheckCircle
-                                BloodPressureCategory.ELEVATED -> Icons.Filled.Info
-                                BloodPressureCategory.HIGH_STAGE_1 -> Icons.Filled.Warning
-                                BloodPressureCategory.HIGH_STAGE_2 -> Icons.Filled.Error
-                                BloodPressureCategory.HYPERTENSIVE_CRISIS -> Icons.Filled.Emergency
+                                BloodPressureCategory.LOW -> Icons.Filled.TrendingDown
+                                BloodPressureCategory.IDEAL -> Icons.Filled.CheckCircle
+                                BloodPressureCategory.PRE_HIGH -> Icons.Filled.Info
+                                BloodPressureCategory.HIGH -> Icons.Filled.Error
                             },
                             contentDescription = null,
                             tint = getCategoryColor(category)

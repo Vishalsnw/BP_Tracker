@@ -67,11 +67,10 @@ class BloodPressureRepository @Inject constructor(
             minSystolic = bloodPressureDao.getMinSystolic(startDateStr) ?: 0,
             minDiastolic = bloodPressureDao.getMinDiastolic(startDateStr) ?: 0,
             totalReadings = readings.size,
-            normalCount = categoryCount[BloodPressureCategory.NORMAL]?.size ?: 0,
-            elevatedCount = categoryCount[BloodPressureCategory.ELEVATED]?.size ?: 0,
-            highStage1Count = categoryCount[BloodPressureCategory.HIGH_STAGE_1]?.size ?: 0,
-            highStage2Count = categoryCount[BloodPressureCategory.HIGH_STAGE_2]?.size ?: 0,
-            crisisCount = categoryCount[BloodPressureCategory.HYPERTENSIVE_CRISIS]?.size ?: 0
+            lowCount = categoryCount[BloodPressureCategory.LOW]?.size ?: 0,
+            idealCount = categoryCount[BloodPressureCategory.IDEAL]?.size ?: 0,
+            preHighCount = categoryCount[BloodPressureCategory.PRE_HIGH]?.size ?: 0,
+            highCount = categoryCount[BloodPressureCategory.HIGH]?.size ?: 0
         )
     }
 }
