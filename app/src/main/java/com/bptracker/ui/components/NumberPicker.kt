@@ -99,17 +99,16 @@ fun NumberPicker(
                     Box(
                         modifier = Modifier
                             .height(60.dp)
-                            .width(140.dp)
-                            .alpha(if (isSelected) 1f else 0f),
+                            .width(140.dp),
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
                             text = itemValue.toString(),
                             style = MaterialTheme.typography.headlineLarge.copy(
-                                fontSize = 36.sp,
-                                fontWeight = FontWeight.Bold
+                                fontSize = if (isSelected) 36.sp else 20.sp,
+                                fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal
                             ),
-                            color = color,
+                            color = if (isSelected) color else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.15f),
                             textAlign = TextAlign.Center,
                             modifier = Modifier.fillMaxWidth()
                         )
