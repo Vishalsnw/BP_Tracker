@@ -70,12 +70,12 @@ fun NumberPicker(
         Box(
             modifier = Modifier
                 .height(140.dp)
-                .width(120.dp),
+                .wrapContentWidth(),
             contentAlignment = Alignment.Center
         ) {
             Box(
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .width(140.dp)
                     .height(60.dp)
                     .background(
                         color = color.copy(alpha = 0.15f),
@@ -86,7 +86,9 @@ fun NumberPicker(
             LazyColumn(
                 state = listState,
                 flingBehavior = rememberSnapFlingBehavior(lazyListState = listState),
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .width(140.dp)
+                    .fillMaxHeight(),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 contentPadding = PaddingValues(vertical = 40.dp)
             ) {
@@ -97,18 +99,19 @@ fun NumberPicker(
                     Box(
                         modifier = Modifier
                             .height(60.dp)
-                            .fillMaxWidth()
-                            .alpha(if (isSelected) 1f else 0.08f),
+                            .width(140.dp)
+                            .alpha(if (isSelected) 1f else 0.5f),
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
                             text = itemValue.toString(),
                             style = MaterialTheme.typography.headlineLarge.copy(
-                                fontSize = if (isSelected) 40.sp else 28.sp,
+                                fontSize = if (isSelected) 36.sp else 24.sp,
                                 fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal
                             ),
-                            color = if (isSelected) color else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.3f),
-                            textAlign = TextAlign.Center
+                            color = if (isSelected) color else MaterialTheme.colorScheme.onSurfaceVariant,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.fillMaxWidth()
                         )
                     }
                 }
