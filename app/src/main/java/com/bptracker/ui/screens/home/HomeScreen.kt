@@ -70,13 +70,13 @@ fun HomeScreen(
                         }
                         Column {
                             Text(
-                                "BP Tracker",
+                                "VitalFlow",
                                 style = MaterialTheme.typography.titleLarge,
                                 fontWeight = FontWeight.Bold,
                                 color = MaterialTheme.colorScheme.onBackground
                             )
                             Text(
-                                "Monitor your heart health",
+                                "Blood pressure tracker",
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
