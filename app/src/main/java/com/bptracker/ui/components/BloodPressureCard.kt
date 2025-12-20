@@ -341,5 +341,6 @@ fun getCategoryColor(category: BloodPressureCategory): Color {
         BloodPressureCategory.IDEAL -> BPIdeal
         BloodPressureCategory.PRE_HIGH -> BPPreHigh
         BloodPressureCategory.HIGH -> BPHigh
+        BloodPressureCategory.CRISIS -> BPCrisis
     }
 }

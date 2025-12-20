@@ -14,6 +14,7 @@ val BPLow = Color(0xFF8B5CF6)
 val BPIdeal = Color(0xFF10B981)
 val BPPreHigh = Color(0xFFFCD34D)
 val BPHigh = Color(0xFFEF4444)
+val BPCrisis = Color(0xFF7F1D1D)
 
 val SystolicColor = Color(0xFFEC4899)
 val DiastolicColor = Color(0xFF3B82F6)

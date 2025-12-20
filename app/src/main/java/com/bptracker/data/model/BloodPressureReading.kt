@@ -30,6 +30,7 @@ data class BloodPressureReading(
     
     val category: BloodPressureCategory
         get() = when {
+            systolic >= 180 || diastolic >= 120 -> BloodPressureCategory.CRISIS
             systolic >= 140 || diastolic >= 90 -> BloodPressureCategory.HIGH
             systolic in 120..139 || diastolic in 80..89 -> BloodPressureCategory.PRE_HIGH
             systolic < 120 && diastolic < 80 -> BloodPressureCategory.IDEAL
@@ -44,7 +45,7 @@ data class BloodPressureReading(
         get() = systolic - diastolic
     
     val isCrisis: Boolean
-        get() = category == BloodPressureCategory.HIGH
+        get() = category == BloodPressureCategory.CRISIS
     
     val formattedDate: String
         get() = timestamp.format(DateTimeFormatter.ofPattern("MMM dd, yyyy"))
@@ -63,7 +64,8 @@ enum class BloodPressureCategory(val label: String, val description: String) {
     LOW("Low", "Your blood pressure is low. Ensure you're well hydrated and rested."),
     IDEAL("Ideal", "Your blood pressure is in the ideal range."),
     PRE_HIGH("Pre-high", "Your blood pressure is elevated. Monitor it regularly."),
-    HIGH("High", "Your blood pressure is high. Consult your doctor.")
+    HIGH("High", "Your blood pressure is high. Consult your doctor."),
+    CRISIS("Crisis", "Your blood pressure is critically high. Seek immediate medical attention!")
 }
 
 enum class ReadingTag(val label: String) {

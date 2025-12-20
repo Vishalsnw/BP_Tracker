@@ -76,7 +76,7 @@ class AlertManager @Inject constructor(
     }
     
     fun checkAndAlertReading(reading: BloodPressureReading, settings: AlertSettings) {
-        if (reading.category == BloodPressureCategory.HIGH && settings.crisisAlertEnabled) {
+        if (reading.category == BloodPressureCategory.CRISIS && settings.crisisAlertEnabled) {
             sendCrisisAlert(reading)
             return
         }
