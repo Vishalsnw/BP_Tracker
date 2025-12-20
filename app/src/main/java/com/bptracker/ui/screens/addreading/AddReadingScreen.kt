@@ -95,6 +95,44 @@ fun AddReadingScreen(
                     
                     Spacer(modifier = Modifier.height(16.dp))
                     
+                    // Display current reading
+                    Row(
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        Text(
+                            text = uiState.systolic.toString(),
+                            style = MaterialTheme.typography.displayLarge.copy(
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 48.sp
+                            ),
+                            color = SystolicColor
+                        )
+                        Text(
+                            text = "/",
+                            style = MaterialTheme.typography.displayMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.padding(horizontal = 8.dp)
+                        )
+                        Text(
+                            text = uiState.diastolic.toString(),
+                            style = MaterialTheme.typography.displayLarge.copy(
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 48.sp
+                            ),
+                            color = DiastolicColor
+                        )
+                    }
+                    
+                    Text(
+                        text = "mmHg",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    
+                    Spacer(modifier = Modifier.height(24.dp))
+                    
                     Row(
                         horizontalArrangement = Arrangement.spacedBy(24.dp),
                         verticalAlignment = Alignment.CenterVertically
@@ -103,32 +141,18 @@ fun AddReadingScreen(
                             value = uiState.systolic,
                             onValueChange = { viewModel.updateSystolic(it) },
                             range = 60..250,
-                            label = "Systolic",
+                            label = "Scroll to select",
                             color = SystolicColor
-                        )
-                        
-                        Text(
-                            text = "/",
-                            style = MaterialTheme.typography.displayMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                         
                         NumberPicker(
                             value = uiState.diastolic,
                             onValueChange = { viewModel.updateDiastolic(it) },
                             range = 40..150,
-                            label = "Diastolic",
+                            label = "Scroll to select",
                             color = DiastolicColor
                         )
                     }
-                    
-                    Spacer(modifier = Modifier.height(8.dp))
-                    
-                    Text(
-                        text = "mmHg",
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
                 }
             }
             
@@ -158,11 +182,29 @@ fun AddReadingScreen(
                     
                     Spacer(modifier = Modifier.height(16.dp))
                     
+                    // Display current pulse
+                    Text(
+                        text = uiState.pulse.toString(),
+                        style = MaterialTheme.typography.displayLarge.copy(
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 48.sp
+                        ),
+                        color = PulseColor
+                    )
+                    
+                    Text(
+                        text = "BPM",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    
+                    Spacer(modifier = Modifier.height(24.dp))
+                    
                     NumberPicker(
                         value = uiState.pulse,
                         onValueChange = { viewModel.updatePulse(it) },
                         range = 40..200,
-                        label = "BPM",
+                        label = "Scroll to select",
                         color = PulseColor
                     )
                 }
