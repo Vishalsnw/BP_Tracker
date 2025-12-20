@@ -44,7 +44,7 @@ data class BloodPressureReading(
         get() = systolic - diastolic
     
     val isCrisis: Boolean
-        get() = category == BloodPressureCategory.HYPERTENSIVE_CRISIS
+        get() = category == BloodPressureCategory.HIGH
     
     val formattedDate: String
         get() = timestamp.format(DateTimeFormatter.ofPattern("MMM dd, yyyy"))

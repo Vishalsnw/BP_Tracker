@@ -318,11 +318,10 @@ object PdfExporter {
             val percentage = if (readings.isNotEmpty()) (count.toFloat() / readings.size * 100) else 0f
             
             val categoryColor = when (category) {
-                BloodPressureCategory.NORMAL -> NORMAL_COLOR
-                BloodPressureCategory.ELEVATED -> ELEVATED_COLOR
-                BloodPressureCategory.HIGH_STAGE_1 -> HIGH_COLOR
-                BloodPressureCategory.HIGH_STAGE_2 -> HIGH_COLOR
-                BloodPressureCategory.HYPERTENSIVE_CRISIS -> CRISIS_COLOR
+                BloodPressureCategory.LOW -> NORMAL_COLOR
+                BloodPressureCategory.IDEAL -> NORMAL_COLOR
+                BloodPressureCategory.PRE_HIGH -> ELEVATED_COLOR
+                BloodPressureCategory.HIGH -> HIGH_COLOR
             }
             
             categoryTable.addCell(
@@ -454,11 +453,10 @@ object PdfExporter {
             )
             
             val categoryColor = when (reading.category) {
-                BloodPressureCategory.NORMAL -> NORMAL_COLOR
-                BloodPressureCategory.ELEVATED -> ELEVATED_COLOR
-                BloodPressureCategory.HIGH_STAGE_1 -> HIGH_COLOR
-                BloodPressureCategory.HIGH_STAGE_2 -> HIGH_COLOR
-                BloodPressureCategory.HYPERTENSIVE_CRISIS -> CRISIS_COLOR
+                BloodPressureCategory.LOW -> NORMAL_COLOR
+                BloodPressureCategory.IDEAL -> NORMAL_COLOR
+                BloodPressureCategory.PRE_HIGH -> ELEVATED_COLOR
+                BloodPressureCategory.HIGH -> HIGH_COLOR
             }
             
             table.addCell(
