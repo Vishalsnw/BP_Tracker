@@ -70,7 +70,7 @@ fun NumberPicker(
         Box(
             modifier = Modifier
                 .height(140.dp)
-                .width(100.dp),
+                .width(120.dp),
             contentAlignment = Alignment.Center
         ) {
             Box(

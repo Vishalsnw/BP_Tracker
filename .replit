@@ -18,6 +18,10 @@ author = "agent"
 task = "workflow.run"
 args = "Android Project Info"
 
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Android Build"
+
 [[workflows.workflow]]
 name = "Android Project Info"
 author = "agent"
@@ -28,3 +32,14 @@ outputType = "console"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "./project_info.sh"
+
+[[workflows.workflow]]
+name = "Android Build"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "./gradlew assembleDebug --stacktrace"
+
+[workflows.workflow.metadata]
+outputType = "console"
