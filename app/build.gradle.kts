@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "com.bptracker"
+    namespace = "com.vitalflowapp"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.bptracker"
+        applicationId = "com.vitalflowapp"
         minSdk = 26
         targetSdk = 34
         versionCode = 1
