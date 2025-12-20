@@ -69,17 +69,17 @@ fun NumberPicker(
         
         Box(
             modifier = Modifier
-                .height(150.dp)
-                .width(80.dp),
+                .height(140.dp)
+                .width(100.dp),
             contentAlignment = Alignment.Center
         ) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(50.dp)
+                    .height(60.dp)
                     .background(
-                        color = color.copy(alpha = 0.1f),
-                        shape = RoundedCornerShape(8.dp)
+                        color = color.copy(alpha = 0.15f),
+                        shape = RoundedCornerShape(12.dp)
                     )
             )
             
@@ -88,7 +88,7 @@ fun NumberPicker(
                 flingBehavior = rememberSnapFlingBehavior(lazyListState = listState),
                 modifier = Modifier.fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                contentPadding = PaddingValues(vertical = 50.dp)
+                contentPadding = PaddingValues(vertical = 40.dp)
             ) {
                 items(range.count()) { index ->
                     val itemValue = range.first + index
@@ -96,18 +96,18 @@ fun NumberPicker(
                     
                     Box(
                         modifier = Modifier
-                            .height(50.dp)
+                            .height(60.dp)
                             .fillMaxWidth()
-                            .alpha(if (isSelected) 1f else 0.4f),
+                            .alpha(if (isSelected) 1f else 0.08f),
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
                             text = itemValue.toString(),
-                            style = MaterialTheme.typography.headlineMedium.copy(
-                                fontSize = if (isSelected) 32.sp else 24.sp,
+                            style = MaterialTheme.typography.headlineLarge.copy(
+                                fontSize = if (isSelected) 40.sp else 28.sp,
                                 fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal
                             ),
-                            color = if (isSelected) color else MaterialTheme.colorScheme.onSurface,
+                            color = if (isSelected) color else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.3f),
                             textAlign = TextAlign.Center
                         )
                     }
