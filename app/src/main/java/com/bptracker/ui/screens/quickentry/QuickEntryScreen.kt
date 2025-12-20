@@ -179,6 +179,7 @@ fun QuickEntryScreen(
                                 BloodPressureCategory.IDEAL -> Icons.Filled.CheckCircle
                                 BloodPressureCategory.PRE_HIGH -> Icons.Filled.Info
                                 BloodPressureCategory.HIGH -> Icons.Filled.Error
+                                BloodPressureCategory.CRISIS -> Icons.Filled.Error
                             },
                             contentDescription = null,
                             tint = getCategoryColor(category)

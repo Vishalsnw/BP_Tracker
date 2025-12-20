@@ -322,6 +322,7 @@ object PdfExporter {
                 BloodPressureCategory.IDEAL -> NORMAL_COLOR
                 BloodPressureCategory.PRE_HIGH -> ELEVATED_COLOR
                 BloodPressureCategory.HIGH -> HIGH_COLOR
+                BloodPressureCategory.CRISIS -> HIGH_COLOR
             }
             
             categoryTable.addCell(
@@ -457,6 +458,7 @@ object PdfExporter {
                 BloodPressureCategory.IDEAL -> NORMAL_COLOR
                 BloodPressureCategory.PRE_HIGH -> ELEVATED_COLOR
                 BloodPressureCategory.HIGH -> HIGH_COLOR
+                BloodPressureCategory.CRISIS -> HIGH_COLOR
             }
             
             table.addCell(
