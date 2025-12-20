@@ -1,7 +1,7 @@
-# Blood Pressure Tracker - Replit Import
+# VitalFlow - Replit Import
 
 ## Project Overview
-A comprehensive Android/Kotlin blood pressure tracking application with advanced features including cloud backup, Bluetooth device integration, Health Connect sync, medication tracking, and emergency response capabilities.
+A comprehensive Android/Kotlin health tracking application (VitalFlow) with advanced features including Bluetooth device integration, Health Connect sync, medication tracking, and emergency response capabilities.
 
 ## Technology Stack
 - **Language**: Kotlin
