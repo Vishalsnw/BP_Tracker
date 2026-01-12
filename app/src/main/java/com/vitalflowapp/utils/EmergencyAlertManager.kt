@@ -49,11 +49,6 @@ object EmergencyAlertManager {
         
         showCrisisNotification(context, reading)
         
-        if (profile?.enableCrisisAlerts == true && 
-            !profile.emergencyContactPhone.isNullOrBlank()) {
-            sendEmergencySms(context, reading, profile)
-        }
-        
         return true
     }
     
@@ -92,58 +87,6 @@ object EmergencyAlertManager {
         if (ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) 
             == PackageManager.PERMISSION_GRANTED) {
             NotificationManagerCompat.from(context).notify(CRISIS_NOTIFICATION_ID, notification)
-        }
-    }
-    
-    private fun sendEmergencySms(
-        context: Context,
-        reading: BloodPressureReading,
-        profile: UserProfile
-    ) {
-        if (ContextCompat.checkSelfPermission(context, Manifest.permission.SEND_SMS) 
-            != PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(
-                context, 
-                "SMS permission required to send emergency alerts", 
-                Toast.LENGTH_LONG
-            ).show()
-            return
-        }
-        
-        try {
-            val message = "ALERT: ${profile.name}'s blood pressure reading is critically high: " +
-                    "${reading.systolic}/${reading.diastolic} mmHg. " +
-                    "This may indicate a hypertensive crisis. " +
-                    "Please check on them or call emergency services."
-            
-            val smsManager = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                context.getSystemService(SmsManager::class.java)
-            } else {
-                @Suppress("DEPRECATION")
-                SmsManager.getDefault()
-            }
-            
-            smsManager.sendTextMessage(
-                profile.emergencyContactPhone,
-                null,
-                message,
-                null,
-                null
-            )
-            
-            Toast.makeText(
-                context,
-                "Emergency alert sent to ${profile.emergencyContactName}",
-                Toast.LENGTH_SHORT
-            ).show()
-            
-        } catch (e: Exception) {
-            e.printStackTrace()
-            Toast.makeText(
-                context,
-                "Failed to send emergency SMS: ${e.message}",
-                Toast.LENGTH_LONG
-            ).show()
         }
     }
     
